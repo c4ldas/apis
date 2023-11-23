@@ -1,4 +1,4 @@
-# repl
+# APIs
 
 These are some endpoints I created to facilitate Twitch streamers to update commands more easily
 
