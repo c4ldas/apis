@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./verify.css">
+  <title>Valorant Rank chat</title>
+</head>
+  <body id="body">
+    <div class="container">
+      <header class="header">
+        <a href="../../"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png" class="image" alt="Logo da página" alt="home"></a>
+        <nav class="navigation">
+          <a href="../../"><img class="icons" src="./../../images/home.svg" alt="home"></a> 
+          <a href="https://twitch.tv/c4ldas" target="_blank"><img class="icons" src="./../../images/twitch.svg"></a> 
+          <a href="https://youtube.com/c4ldas" target="_blank"><img class="icons" src="./../../images/youtube.svg" alt="youtube"></a> 
+          <a href="https://instagram.com/c4ldas" target="_blank"><img class="icons" src="./../../images/instagram.svg" alt="instagram"></a> 
+          <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
+        </nav>
+      </header>
+
+      <main>
+        <h1>Como usar o endpoint:</h1>
+        <p>Este endpoint mostra os jogos do dia baseado no torneio pesquisado. A atualização dos jogos e do placar é automática, porém pode levar algum tempo até que os dados sejam atualizados, não é algo instantâneo. A lista de torneio é voltada para os jogos onde os times brasileiros participam.</p>
+        <div>
+          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/schedule?channel=$(channel)&league=<wbr><span class="tagLine">LEAGUE_NAME</span></code>
+        </div>
+        <h3><p>Possíveis valores para <span class="tagLine">LEAGUE_NAME</span>:</p></h3>        
+        <table>
+          <tr>
+            <th class="region-code">League name</th>
+            <th>Torneio</th>
+          </tr>
+          <tr>
+            <td class="region">challengers_br</td>
+            <td>Challengers BR</td>
+          </tr>
+          <tr>
+            <td class="region">vct_lock_in</td>
+            <td>VCT LOCK//IN</td>
+          </tr>
+          <tr>
+            <td class="region">game_changers_series_brazil</td>
+            <td>Game Changers BR</td>
+          </tr>      
+          <tr>
+            <td class="region">last_chance_qualifier_br_and_latam</td>
+            <td>Last Chance Qualifier BR & Latam</td>
+          </tr>
+          <tr>
+            <td class="region">vct_americas</td>
+            <td>VCT Americas</td>
+          </tr>
+          <tr>
+            <td class="region">vct_masters</td>
+            <td>Masters</td>
+          </tr>
+          <tr>
+            <td class="region">champions</td>
+            <td>Champions</td>
+          </tr>
+          <tr>
+            <td class="region">ascension_americas</td>
+            <td>Ascension Americas</td>
+          </tr>
+          <tr>
+            <td class="region">last_chance_qualifier_americas</td>
+            <td>Last Chance Qualifier Americas</td>
+          </tr>          
+          <tr>
+            <td class="region">game_changers_championship</td>
+            <td>Game Changers Championship</td>
+          </tr>      
+        </table>
+        <h2>Criando o comando manualmente para o Streamelements:</h2>
+        
+        <div>Para criar o comando no Streamelements, vá até o dashboard, crie um novo comando e coloque o seguinte na resposta (substitua <span class="tagLine">LEAGUE_NAME</span> pelo <strong>League name</strong> do quadro superior):</div>
+        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/schedule?channel=$(channel)&league=<wbr><span class="tagLine">LEAGUE_NAME</span>}</p>        
+        <p>Mais torneios podem ser adicionados, à medida que a Riot for criando eles. Caso tenha algum torneio que não esteja na lista, entre em contato comigo pelo Twitter, Twitch, Github, Instagram, qualquer lugar pra informar, o usuário é sempre <span class='playerName'>@c4ldas</span></p>
+        <h2>Resposta do comando:</h2>
+        <img src='https://i.imgur.com/g18w6eb.png' />
+      </main>
+    </div>
+  </body>
+</html>

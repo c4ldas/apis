@@ -1,0 +1,24 @@
+{
+  "name": "c4ldas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@js-temporal/polyfill": "^0.4.4",
+    "@replit/database": "^2.0.2",
+    "@types/node": "^18.0.6",
+    "axios": "^0.27.2",
+    "cli-color": "^2.0.3",
+    "cors": "^2.8.5",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "iconv-lite": "^0.6.3",
+    "node-fetch": "^2.6.7",
+    "uuid": "^8.3.2",
+    "youtubei.js": "^6.4.1"
+  }
+}

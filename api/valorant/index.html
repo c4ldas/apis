@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
+  <link rel="stylesheet" href="./styles.css">
+  <link rel="stylesheet" href="./verify.css">
+  <title>Valorant Rank chat</title>
+</head>
+  <body id="body">
+    <div class="container">
+      <header class="header">
+        <a href="../../"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png" class="image" alt="Logo da página" alt="home"></a>
+        <nav class="navigation">
+          <a href="../../"><img class="icons" src="./../../images/home.svg" alt="home"></a> 
+          <a href="https://twitch.tv/c4ldas" target="_blank"><img class="icons" src="./../../images/twitch.svg"></a> 
+          <a href="https://youtube.com/c4ldas" target="_blank"><img class="icons" src="./../../images/youtube.svg" alt="youtube"></a> 
+          <a href="https://instagram.com/c4ldas" target="_blank"><img class="icons" src="./../../images/instagram.svg" alt="instagram"></a> 
+          <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
+        </nav>
+      </header>
+
+      <main>
+        <h1>Como usar o endpoint:</h1>
+        <div>
+          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">USERNAME</span>"<wbr>&tag=<span class="tagLine">TAGLINE</span><wbr>&msg="<span class="message">MENSAGEM</span>"</code>
+        </div>
+        <br/>
+        <div>
+          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&id="<span class="playerName">ID</span>"<wbr>&msg="<span class="message">MENSAGEM</span>"</code>
+        </div>        
+        <h2>Exemplo: </h2>
+        <div>Se o seu nick for: LOUD Coreano#LLL</div>
+        <div><strong>USERNAME</strong> = "LOUD Coreano"</div>
+        <div><strong>TAGLINE</strong> = LLL</div>
+        <div><strong>MENSAGEM (opcional)</strong> = Mensagem que será exibida no chat quando o endpoint for acessado. O conteúdo da mensagem deve ficar entre aspas " ".</div>
+        <div><strong>Possíveis variáveis em MENSAGEM</strong>: <span class="blue">(player)</span>, <span class="blue">(pontos)</span>, <span class="blue">(rank)</span>. Caso seja Imortal/Radiante, também pode usar <span class="blue">(posicao)</span> e <span class="blue">(vitorias)</span> para mostrar sua posição e quantidade de vitórias, respectivamente.</div>
+        <div>Caso não adicione nenhuma mensagem, a seguinte mensagem padrão será exibida (utilizando o usuário do exemplo):</div>
+        <div class="message">LOUD Coreano tem 213 pontos e tá Imortal 2</div>
+        <div><strong>ID</strong> = Para informações como usar o ID ao invés de player/tag, veja mais abaixo ou clique aqui: <a href='#id'>Usando ID</a></div>
+        <h2>Configure a sua mensagem:</h2>
+        <div>Utilize o quadro abaixo para preencher seu nick, tag e mensagem (opcional), depois clique em "<strong>Mostrar mensagem formatada</strong>". <br/>Caso esteja satisfeito, clique em "<strong>Gerar código para chat</strong>"</div>
+        <div style="padding:10px; ">
+          <form action="." method="POST" id="form" class="form">
+            <input type="text" name="username" class="username" id="username" placeholder="Username">
+            <input type="text" name="tagline" class="tagline" id="tagline" placeholder="Tagline (depois do #)">
+            <input type="text" name="phrase" class="phrase" id="phrase" placeholder="Mensagem: (player) está (rank) com (pontos) pontos">
+            <h5 class="variables">Variáveis disponíveis: (player)&nbsp; (rank)&nbsp; (pontos)</h5>
+            <h5 class="radiant"> Para Imortal/Radiante: (player)&nbsp; (rank)&nbsp; (pontos)&nbsp; (posicao)&nbsp; (vitorias)</h5>
+            <input type="submit" class="formatted" id="formatted" value="Mostrar mensagem formatada">
+            <input type="submit" class="codigo" id="codigo" value="Gerar código para chat">
+            <div class="mensagem" id="mensagem"></div>
+            <div class="mensagem-codigo" id="mensagem-codigo"></div>
+          </form>
+        </div>
+        
+        <h2>Criando o comando manualmente para o Streamelements:</h2>
+        <p>Para adicionar o comando, use o quadro superior para gerar o comando ou crie manualmente usando o exemplo abaixo:</p> 
+        <div>Caso seu nick possua caracteres especiais, acentos ou coisas esquisitas (você tem problemas?), use o quadro superior ou prefira usar a opção de ID logo abaixo.</div>
+        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">LOUD Coreano</span>"<wbr>&tag=<span class="tagLine">LLL</span><wbr>&msg="<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>"}</p>
+
+        <a name='id'><h3>Usando ID ao invés de player/tag</h3></a>
+        <p>Também é possível utilizar a opção id ao invés de player e tag. Com o ID, você não precisará ficar atualizando o comando cada vez que troca de nick (novamente, qual o seu problema?). O comando ficará assim:</p>
+        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&id=<span class="tagLine">10726a29-ce65-5471-a794-32733f309a16</span><wbr>&msg="<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>"}</p>
+        
+        <p>Para descobrir o seu id (também chamado de puuid), abra essa página e digite o seu nick e tag:</p>
+        
+        <a href='./puuid' target="_blank">Encontre o seu ID (puuid)</a>        
+        
+        <h2>Ou fazendo diretamente pelo chat:</h2>
+        <p class="code"> !cmd add rank .me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">LOUD Coreano</span>"<wbr>&tag=<span class="tagLine">LLL</span><wbr>&msg="<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>"}</p>
+      </main>
+    </div>
+    <script src="verify.js"></script>
+  </body>
+</html>

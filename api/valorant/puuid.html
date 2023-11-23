@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
+  <link rel="stylesheet" href="./styles.css">
+
+  <title>Encontre o puuid da sua conta</title>
+</head>
+  
+<body>
+  <div class="container">
+    <header class="header">
+      <a href="../../"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png" class="image" alt="Logo da página" alt="home"></a>
+      <nav class="navigation">
+        <a href="../../"><img class="icons" src="./../../images/home.svg" alt="home"></a> 
+        <a href="https://twitch.tv/c4ldas" target="_blank"><img class="icons" src="./../../images/twitch.svg"></a> 
+        <a href="https://youtube.com/c4ldas" target="_blank"><img class="icons" src="./../../images/youtube.svg" alt="youtube"></a> 
+        <a href="https://instagram.com/c4ldas" target="_blank"><img class="icons" src="./../../images/instagram.svg" alt="instagram"></a> 
+        <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
+      </nav>
+    </header>  
+    
+    <main>
+      <h1>Encontre o puuid da sua conta Riot:</h1>
+      <form action="." method="POST" id="form">
+        <input type="text" name="username" class="username" id="username" placeholder="Username">
+        <input type="text" name="tagline" class="tagline" id="tagline" placeholder="Tagline (depois do #)">
+        <input type="submit" class="button" id="button" value="Obter puuid">
+        <input type="reset" class="reset" id="reset" value="Limpar campos">
+        <h3><div class="puuid" id="puuid"></div></h3>
+        <img src="" id="img">
+      </form>
+    </main>
+  </div>
+  <script src="puuid.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Youtube ID</title>
+</head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="../../"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png" class="image" alt="Logo da página" alt="home"></a>
+        <nav class="navigation">
+          <a href="../../"><img class="icons" src="./../../images/home.svg" alt="home"></a> 
+          <a href="https://twitch.tv/c4ldas" target="_blank"><img class="icons" src="./../../images/twitch.svg"></a> 
+          <a href="https://youtube.com/c4ldas" target="_blank"><img class="icons" src="./../../images/youtube.svg" alt="youtube"></a> 
+          <a href="https://instagram.com/c4ldas" target="_blank"><img class="icons" src="./../../images/instagram.svg" alt="instagram"></a> 
+          <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
+        </nav>
+      </header>
+      
+      <h1 class="title">Youtube - Obter ID de um canal</h1>
+      <div class="container-code"> 
+        <input type="text" id="overlay-code" class="text-code" placeholder="Nome do canal com @"/>
+        <button type="submit" id="submit" class="button">Obter info do canal</button>
+        <p id="no-code" class="invalid no-code">Por favor, insira o nome do canal no campo indicado!</p>
+      </div>
+      
+      <div id="results" class="results">
+        <h1>Informações do canal:</h1>
+        <a id="channel-url" href="" target="_blank"><img id="channel-image" style="border-radius: 50%;" src="" /></a>
+        <div><strong>Display Name: </strong><span id="channel-name"></span></div>
+        <div><strong>Channel ID: </strong><span id="channel-id"></span></div>
+        <div><strong>Criado em: </strong><span id="channel-created-at"></span></div>
+      </div>
+    </div>
+    
+    <script>
+      const code = document.querySelector('#overlay-code');
+      const submit = document.querySelector('#submit');
+      const noCode = document.querySelector('#no-code');
+      const results = document.querySelector('#results');
+      const url = document.querySelector('#channel-url');
+      const image = document.querySelector("#channel-image");
+      const name = document.querySelector('#channel-name');
+      const channelId = document.querySelector('#channel-id');
+      const createdAt = document.querySelector('#channel-created-at');
+      
+      submit.addEventListener('click', async (event) => {
+        results.style.display = 'none'
+        noCode.style.display = 'none'
+        
+        console.log(code.value);
+        event.preventDefault();
+        if(code.value == ''){
+          noCode.style.display = 'flex';
+          return;
+        }
+        const request = await fetch(`/api/youtube/${code.value}`)
+        const result = await request.json()
+
+        url.href = `https://youtube.com/channel/${result.channelId}`
+        image.src = result.thumbnails.medium.url
+        name.innerText = result.title;
+        channelId.innerText = result.channelId;
+        createdAt.innerText = result.publishedAt ? new Date(result.publishedAt).toLocaleDateString('pt-BR') : null;
+        results.style.display = 'flex'
+        
+      })
+    </script>
+  </body>
+</html>
+
+

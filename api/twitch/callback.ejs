@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
+  <link rel="stylesheet" href="./styles.css">
+  <title>Autenticado</title>
+</head>
+  <body>
+    <div class='container'>
+      <header class="header">
+        <a href="../../"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png" class="image" alt="Logo da página" alt="home"></a>
+        <nav class="navigation">
+          <a href="../../"><img class="icons" src="./../../images/home.svg" alt="home"></a> 
+          <a href="https://twitch.tv/c4ldas" target="_blank"><img class="icons" src="./../../images/twitch.svg"></a> 
+          <a href="https://youtube.com/c4ldas" target="_blank"><img class="icons" src="./../../images/youtube.svg" alt="youtube"></a> 
+          <a href="https://instagram.com/c4ldas" target="_blank"><img class="icons" src="./../../images/instagram.svg" alt="instagram"></a> 
+          <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
+        </nav>
+      </header>
+      
+      <h1>Autenticado!</h1>
+      <h3 style="color:red;">Não deixe esse comando visível e dê permissão apenas para moderadores, caso contrário outros podem abrir e fechar apostas.<br/>
+Envie para um moderador que tenha acesso ao dashboard do Streamelements para poder criar os comandos.<br/>
+Não crie o comando diretamente pelo chat pois o comando é único pra cada streamer!</h3>
+ 
+      <h2>Code:</h2>
+      <details>
+        <summary>Mostrar Code:</summary>
+        <div class="code blue"><%= code %></div>
+      </details>   
+      
+      
+      <h2>Comando para criar palpite/aposta:</h2>      
+      <details>
+        <summary>Mostrar Comando:</summary>
+        <div class="code">.me ${sender} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api<wbr>/twitch<wbr>/prediction<wbr>/create/<wbr><%= code %><wbr>/?channel=${channel}<wbr>&option1=${1}<wbr>&option2=${2}<wbr>&question=${queryescape ${3:|Quem ganha esse mapa?}}}</div>
+      </details>  
+
+      <h2>Comando para fechar palpite/aposta:</h2>
+      <details>
+        <summary>Mostrar Comando:</summary>
+        <div class="code">.me ${sender} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api<wbr>/twitch<wbr>/prediction<wbr>/close/<wbr><%= code %><wbr>/?channel=${channel}<wbr>&winner=${1}}</div>
+      </details>  
+
+      <h2>Comando para cancelar palpite/aposta:</h2>
+      <details>
+        <summary>Mostrar Comando:</summary>
+        <div class="code">.me ${sender} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api<wbr>/twitch<wbr>/prediction<wbr>/cancel/<wbr><%= code %><wbr>/?channel=${channel}}</div>
+      </details>  
+      <div><br/>
+        <h2>Como usar:</h2>
+        <p>- Criar aposta/palpite ("pergunta" é opcional, caso não tenha, a pergunta será "<strong>Quem ganha esse mapa?</strong>"). Opção1 e opção2 só devem ter uma única palavra cada:</p>
+        <p class="code">!palpite opção1 opção2 pergunta</p>
+        <p>- Fechar aposta/palpite com a escolha da opção vencedora</p> 
+        <p class="code">!vencedor opção</p>
+        <p>- Fechar aposta com a escolha da opção vencedora</p> 
+        <p class="code">!cancelarpalpite</p>
+      </div>
+    </div>
+  </body>
+</html>
