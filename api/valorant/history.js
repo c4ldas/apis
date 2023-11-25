@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
 
   const channel = req.query.channel || null
   // const msg = req.query.msg || '(player) tem (pontos) pontos e tá (rank)'
-  const rawMsg = req.query.msg ? decodeURIComponent(req.query.msg) : '(player) is (upDown) (mmr)RR. Last 24 hours: (win)-(lose)'
+  const rawMsg = req.query.msg ? decodeURIComponent(req.query.msg) : '(player) is (upDown) (mmr)RR. Last 12 hours: (win)-(lose)'
   const msg = iconv.decode(Buffer.from(rawMsg, 'latin1'), 'utf-8'); // Converts the mesage from utf-8 to latin1 (or iso8891-1) to support latin characteres. 
 
   const player = req.query.player;
@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
   for (i = 0; r.data.length; i++) {
     d = Math.abs(c - new Date(r.data[i].date));
     p = r.data[i].last_mmr_change;
-    if (d > 86400000) {
+    if (d > (86400000/2)) {
       break;
     }
     p > 0 ? win += 1 : lose += 1;
