@@ -8,18 +8,49 @@ const clc = require("cli-color") // colors in console
 // Defining colors for console:
 const red = clc.red
 const green = clc.green
-const validRegions = [ 'br1', 'eun1', 'euw1', 'jp1', 'kr', 'la1', 'la2', 'na1', 'oc1', 'ru1', 'tr1' ]
 
 router.get('/', async (req, res) => {
-
-  const channel = req.query.channel || null
-  // const msg = req.query.msg || '(player) tem (pontos) pontos e tá (rank)'
+  
   const player = req.query.player
-  const region = req.query.region
-  const url = `https://${region}.api.riotgames.com/tft`
+  const tag = req.query.tag || null
+  const channel = req.query.channel || null
+  const apiURL = 'api.riotgames.com'
 
   try {
-    if(!region) {
+    switch (req.query.region) {
+      case 'br1': case 'la1': case 'la2': case 'na1':
+        region = 'americas';
+        break;
+      case 'jp1': case 'kr': case 'oc1':
+        region = 'asia';
+        break;
+      case 'eun1': case 'euw1': case 'ru1': case 'tr1':
+        region = 'europe';
+        break;
+      default:
+        res.send('Parameter "region" missing or invalid. Please check valid regions in https://c4ldas.com.br/api/lol')
+        return
+    }
+
+    const summonerId = tag ? await getRankTag(player, tag) : await getRankNoTag(player)
+
+    async function getRankTag(player, tag) {
+      const getPuuidFetch = await fetch(`https://${region}.${apiURL}/riot/account/v1/accounts/by-riot-id/${player}/${tag}?api_key=${process.env.TFT_TOKEN}`)
+      const getPuuid = await getPuuidFetch.json()
+
+      const getSummonerIdFetch = await fetch(`https://${req.query.region}.${apiURL}/tft/summoner/v1/summoners/by-puuid/${getPuuid.puuid}?api_key=${process.env.TFT_TOKEN}`)
+      const getSummonerId = await getSummonerIdFetch.json()
+      return getSummonerId.id
+    }
+
+
+    async function getRankNoTag(player) {
+      const getSummonerIdFetch = await fetch(`https://${req.query.region}.${apiURL}/tft/summoner/v1/summoners/by-name/${player}?api_key=${process.env.TFT_TOKEN}`)
+      const getSummonerId = await getSummonerIdFetch.json()
+      return getSummonerId.id
+    }
+    
+/*     if(!region) {
       throw new Error("Parameter 'region' missing. Go to https://repl.c4ldas.com.br/api/tft/ to check the regions available.")
     }
     if(!channel && req.query.type !== "overlay"){
@@ -27,12 +58,15 @@ router.get('/', async (req, res) => {
     }
     if(!validRegions.includes(req.query.region)){
       throw new Error("Invalid region. Go to https://repl.c4ldas.com.br/api/tft/ to check the regions available.")
-    }
+    } */
 
-    const getUserFetch = await fetch(`${url}/summoner/v1/summoners/by-name/${player}?api_key=${process.env.TFT_TOKEN}`)
-    const getUser = await getUserFetch.json()
+/*     const getUserFetch = await fetch(`${url}/summoner/v1/summoners/by-name/${player}?api_key=${process.env.TFT_TOKEN}`)
+    const getUser = await getUserFetch.json() */
 
-    const getRankFetch = await fetch(`${url}/league/v1/entries/by-summoner/${getUser.id}?api_key=${process.env.TFT_TOKEN}`)
+/*     const getRankFetch = await fetch(`${url}/league/v1/entries/by-summoner/${getUser.id}?api_key=${process.env.TFT_TOKEN}`)
+    const getRank = await getRankFetch.json() */
+
+    const getRankFetch = await fetch(`https://${req.query.region}.${apiURL}/tft/league/v1/entries/by-summoner/${summonerId}?api_key=${process.env.TFT_TOKEN}`)
     const getRank = await getRankFetch.json()
 
     if (!getRank[0]) {
