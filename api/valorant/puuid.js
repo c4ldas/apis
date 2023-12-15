@@ -46,4 +46,3 @@ function clear() {
   document.getElementById('img').style.display = 'none'
   document.getElementById('img').src = ''
 }
-
