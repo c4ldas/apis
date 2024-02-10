@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
   const channel = req.query.channel || null;
   // const msg = req.query.msg || '(player) tem (pontos) pontos e tá (rank)'
   const rawMsg = req.query.msg ? decodeURIComponent(req.query.msg) : "(player) tem (pontos) pontos e tá (rank)";
-  const msg = iconv.decode(Buffer.from(rawMsg, "latin1"), "utf-8"); // Converts the mesage from utf-8 to latin1 (or iso8891-1) to support latin characteres.
+  const msg = iconv.decode(Buffer.from(rawMsg, "latin1"), "latin1"); // Converts the mesage from utf-8 to latin1 (or iso8859-1) to support latin characteres.
 
   const player = req.query.player;
   const tag = req.query.tag;
