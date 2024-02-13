@@ -3,11 +3,11 @@
 const fetch = require('node-fetch') // Using fetch to collect data from another API
 const express = require('express')
 const router = express.Router()
-const clc = require("cli-color") // colors in console
+// const clc = require("cli-color") // colors in console
 
 // Defining colors for console:
-const red = clc.red
-const green = clc.green
+// const red = clc.red
+// const green = clc.green
 
 router.get('/', async (req, res) => {
 
@@ -65,7 +65,7 @@ router.get('/', async (req, res) => {
     switch (req.query.type) {
       case "text":
         res.status(200).send(`${summonerName}: ${tier} ${rank} - ${leaguePoints} points`)
-        console.log(green(`${new Date().toLocaleTimeString('en-UK')} - LOL Channel: ${channel} - ${summonerName}: ${tier} ${rank} - ${leaguePoints} points`))
+        console.log(`${new Date().toLocaleTimeString('en-UK')} - LOL Channel: ${channel} - ${summonerName}: ${tier} ${rank} - ${leaguePoints} points`)
         break;
 
       case "overlay":
@@ -83,11 +83,11 @@ router.get('/', async (req, res) => {
   catch (error) {
     if (error.message.includes('RGAPI')) {
       res.status(400).send('Wrong parameter values')
-      console.log(red(`${new Date().toLocaleTimeString('en-UK')} - LOL ${channel} - ${error} Player: ${player}`))
+      console.log(`${new Date().toLocaleTimeString('en-UK')} - LOL ${channel} - ${error} Player: ${player}`)
       return
     }
     res.status(400).send({ error: error.message, player: player })
-    console.log(red(`${new Date().toLocaleTimeString('en-UK')} - LOL ${channel} - ${error} Player: ${player}`))
+    console.log(`${new Date().toLocaleTimeString('en-UK')} - LOL ${channel} - ${error} Player: ${player}`)
   }
 })
 
