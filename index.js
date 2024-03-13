@@ -68,6 +68,10 @@ app.get("/api", async (req, res) => {
   res.redirect("../");
 });
 
+app.get("/robots.txt", async (req, res) => {
+  res.sendFile(__dirname + "/robots.txt");
+});
+
 app.post("/spell", async (req, res) => {
   console.log(req.body);
   console.log(typeof req.body);
