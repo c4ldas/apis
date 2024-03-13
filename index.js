@@ -2,6 +2,7 @@ const express = require("express"); // Express server
 const app = express();
 const cors = require("cors");
 const fetch = require("node-fetch");
+app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
 
@@ -65,6 +66,12 @@ app.get("/", async (req, res) => {
 
 app.get("/api", async (req, res) => {
   res.redirect("../");
+});
+
+app.post("/spell", async (req, res) => {
+  console.log(req.body);
+  console.log(typeof req.body);
+  res.status(200).json(req.body);
 });
 
 // app.get('/teste', async (req, res) => {
