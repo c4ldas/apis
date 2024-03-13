@@ -1,34 +1,89 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
-  <link rel="stylesheet" href="./styles.css">  
-  <title>Spotify now playing</title>
-</head>
-<body>
-  <div class='container'>
-    <header class="header">
-      <a href="../../"><img src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png" class="image" alt="Logo da página" alt="home"></a>
-      <nav class="navigation">
-        <a href="../../"><img class="icons" src="./../../images/home.svg" alt="home"></a> 
-        <a href="https://twitch.tv/c4ldas" target="_blank"><img class="icons" src="./../../images/twitch.svg"></a> 
-        <a href="https://youtube.com/c4ldas" target="_blank"><img class="icons" src="./../../images/youtube.svg" alt="youtube"></a> 
-        <a href="https://instagram.com/c4ldas" target="_blank"><img class="icons" src="./../../images/instagram.svg" alt="instagram"></a> 
-        <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
-      </nav>
-    </header>
-    
-    <main>
-      <div style='padding: 20px'><h2>Página para criação do comando !musica para mostrar qual música está tocando no Spotify</h2>
-      <h3>Infelizmente precisa de registro manual do email na API, então não está aberto a qualquer pessoa no momento.</h3></div>
-      
-    <a href="/api/spotify/login" class='twitchbtn' style='text-decoration: none; border: 0.2px solid #000; color: #000; background: #8AE020; padding: 10px; margin: 20px'>Login com Spotify</a>
-    </main>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+    <title>Spotify now playing</title>
+  </head>
+  <body>
+    <div class="container">
+      <header class="header">
+        <a href="../../"
+          ><img
+            src="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-300x300.png"
+            class="image"
+            alt="Logo da página"
+            alt="home"
+        /></a>
+        <nav class="navigation">
+          <a href="../../"
+            ><img class="icons" src="./../../images/home.svg" alt="home"
+          /></a>
+          <a href="https://twitch.tv/c4ldas" target="_blank"
+            ><img class="icons" src="./../../images/twitch.svg"
+          /></a>
+          <a href="https://youtube.com/c4ldas" target="_blank"
+            ><img class="icons" src="./../../images/youtube.svg" alt="youtube"
+          /></a>
+          <a href="https://instagram.com/c4ldas" target="_blank"
+            ><img
+              class="icons"
+              src="./../../images/instagram.svg"
+              alt="instagram"
+          /></a>
+          <a href="https://github.com/c4ldas" target="_blank"
+            ><img class="icons" src="./../../images/github.svg" alt="github"
+          /></a>
+        </nav>
+      </header>
 
-    <footer></footer>
-  </div>
-</body>
+      <main>
+        <div style="padding: 20px">
+          <h2>
+            Página para criação do comando !musica para mostrar qual música está
+            tocando no Spotify
+          </h2>
+          <h3>
+            Infelizmente precisa de registro manual do email na API, então não
+            está aberto a qualquer pessoa no momento.
+          </h3>
+        </div>
+        <div style="padding: 20px">
+          <p>
+            Para utilizar, inicialmente é necessário que o seu email seja
+            cadastrado na base de dados, o que só pode ser feito manualmente.
+          </p>
+          <p>
+            No momento não está sendo possível utilizar a API caso eu não tenha
+            cadastrado seu email manualmente.
+          </p>
+          <p>
+            Caso já tenha seu email cadastrado, você pode fazer login utilizando
+            o botão de login abaixo.
+          </p>
+        </div>
+        <a
+          href="/api/spotify/login"
+          class="twitchbtn"
+          style="
+            text-decoration: none;
+            border: 0.2px solid #000;
+            color: #000;
+            background: #8ae020;
+            padding: 10px;
+            margin: 20px;
+          "
+          >Login com Spotify</a
+        >
+      </main>
+
+      <footer></footer>
+    </div>
+  </body>
 </html>
