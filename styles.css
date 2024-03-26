@@ -1,10 +1,33 @@
+:root {
+  --light-color: linear-gradient(117deg, rgba(58,205,182, 1) 0%, rgba(233,251,245,1) 100%);
+  --dark-color: linear-gradient(117deg, rgba(46, 46, 46, 1) 0%, rgba(71, 71, 71, 1) 100%);
+  
+  --bg-light: var(--light-color);
+  --bg-dark: var(--dark-color);
+  
+  --text-light: black;
+  --text-dark: #f2f2f2;
+
+  --box-bg-light: hsla(0, 0%, 100%, .6);
+  --box-bg-dark: hsla(0, 100%, 100%, .2);
+
+  --transition: .4s;
+  transition: background-image var(--transition);
+}
+
+
+.red {
+  color: #b30000;
+}
+
 * {
   box-sizing: border-box;
   font-family: 'Quicksand', sans-serif;
 }
 
 html {
-  background: linear-gradient(117deg, rgba(58,205,182,1) 0%, rgba(233,251,245,1) 100%);
+  background-image: var(--bg-light);
+  color: var(--text-light);
   background-attachment: fixed;
 }
 
@@ -30,7 +53,14 @@ body {
 }
 
 .main {
+  display: flex;
+  flex-wrap: wrap;
   padding: 20px;
+  gap: 20px; /* Adds space between boxes */
+}
+
+.subtitle {
+  font-size: 1.2rem;
 }
 
 .image {
@@ -42,6 +72,15 @@ body {
 
 a {
   text-decoration: none;
+  color: hsla(240, 100%, 50%, .6);
+} 
+
+a:visited {
+  color: hsla(300, 100%, 25%, .6);
+}
+
+.description {
+  color: var(--text-light)
 }
 
 .icons {
@@ -49,4 +88,105 @@ a {
   min-width: 10px;
   height: auto;
   margin: 10px;
+}
+
+.link-box {
+  border-color: black;
+  border: solid;
+  
+  background-color: var(--box-bg-light);
+  color: var(--text-light);
+  /* padding: 20px; */
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  width: 100%; /* Occupies full width */
+  transition: var(--transition);
+}
+
+.link-box .link-content {
+  display: block;
+  padding: 20px; /* Apply padding directly to the <a> tag */
+}
+
+.footer {
+  display: flex;
+  justify-content: center; /* Center the footer content */
+  padding: 20px;
+  background-color: #f4f4f4; /* A light background for the footer */
+}
+
+/* Theme color toggle switch */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  border-radius: 34px;
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: var(--transition);
+}
+
+.slider:before {
+border-radius: 50%;
+  position: absolute;
+  content: '';
+  height: 36px;
+  width: 36px; /*26px*/
+  left: -2px;
+  bottom: -2px;
+  background-color: white;
+  transition: var(--transition);
+}
+
+input:checked + .slider {
+  background-color: #1b1c1d;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+.mode {
+  content: url('../images/sun.svg');
+  width: 18px; /* Adjust the width of the sun image */
+  height: auto; /* Adjust the height of the sun image */
+  position: absolute;
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  transition: var(--transition);
+}
+
+
+/* Page size configuration */
+
+/* Devices with more than 800px will fit 2 boxes per row */
+@media (min-width: 800px) {
+  .link-box {
+    width: calc(50% - 20px); 
+  }
+}
+
+/* Devices with more than 1200px will fit 3 boxes per row */
+@media (min-width: 1200px){
+  .link-box {
+    width: calc(33% - 20px); 
+  }
 }

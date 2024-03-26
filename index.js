@@ -8,7 +8,7 @@ app.set("view engine", "ejs");
 
 // Blocking access for *.js files, except the frontend ones
 app.use("/*.js", (req, res, next) => {
-  const exceptionList = ["puuid.js", "verify.js"];
+  const exceptionList = ["puuid.js", "verify.js", "index_front.js"];
 
   // Extract the filename from the request path
   const requestedFile = req.originalUrl.split("/").pop();
@@ -62,6 +62,11 @@ app.use("/api/youtube", require("./api/youtube"));
 // Home page
 app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/index.html");
+});
+
+// Home page
+app.get("/old", async (req, res) => {
+  res.sendFile(__dirname + "/index_old.html");
 });
 
 app.get("/api", async (req, res) => {
