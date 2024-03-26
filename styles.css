@@ -111,7 +111,8 @@ a:visited {
   display: flex;
   justify-content: center; /* Center the footer content */
   padding: 20px;
-  background-color: #f4f4f4; /* A light background for the footer */
+  /* background-color: #f4f4f4; /* A light background for the footer */
+  background-color: hsla(0, 0%, 100%, .5);
 }
 
 /* Theme color toggle switch */
