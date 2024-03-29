@@ -82,7 +82,7 @@ a {
 .invalid {
   display: flex;
   justify-content: center;
-  font-size: 2em;
+  font-size: 1.5rem;
   color: #ab0707;
 }
 
@@ -91,22 +91,55 @@ a {
   display: none;
 }
 
+/* 
 .button {
   width: 12rem;
   height: 8rem;
-  font-size: 2.1rem;
+  font-size: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
   color: black;
   background-color: hsl(160, 100%, 50%);
 }
+ */
 
 .text-code {
   width: 23rem;
   height: 6rem;  
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   text-align: center;  
   background-color: #fafafa;
   padding: 0px;    
+}
+
+
+/* Added styling for input[type="submit"] */
+.button {
+  /* Same styles as before */
+  width: 12rem;
+  height: 8rem;
+  font-size: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background-color: hsl(160, 100%, 50%);
+  /* Additional styles for input[type="submit"] */
+  /* border: none; /* Remove default border */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+/* Hover effect for input[type="submit"] */
+.button:hover {
+  background-color: hsl(160, 100%, 40%); /* Darken color on hover */
+}
+
+, .button:focus {
+  outline: none; /* Remove default focus outline */  
+}
+
+.button:active {
+  background-color: hsl(160, 100%, 30%);
 }

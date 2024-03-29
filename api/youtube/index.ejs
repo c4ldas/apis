@@ -21,25 +21,27 @@
         </nav>
       </header>
       
-      <h1 class="title">Youtube - Obter ID de um canal</h1>
-      <div class="container-code"> 
-        <input type="text" id="overlay-code" class="text-code" placeholder="Nome do canal com @"/>
-        <button type="submit" id="submit" class="button">Obter info do canal</button>
-        <p id="no-code" class="invalid no-code">Por favor, insira o nome do canal no campo indicado!</p>
-      </div>
+      <h1 class="title">Youtube - Get channel ID </h1>
+      <form id="channel-form">
+        <div class="container-code"> 
+          <input type="text" id="overlay-code" class="text-code" placeholder="Channel handle with @"/>
+          <input type="submit" id="submit" class="button" value="Get channel info">
+          <p id="no-code" class="invalid no-code">Please insert the channel name in the field!</p>
+        </div>
+      </form>
       
       <div id="results" class="results">
-        <h1>Informações do canal:</h1>
+        <h1>Channel information:</h1>
         <a id="channel-url" href="" target="_blank"><img id="channel-image" style="border-radius: 50%;" src="" /></a>
-        <div><strong>Display Name: </strong><span id="channel-name"></span></div>
-        <div><strong>Channel ID: </strong><span id="channel-id"></span></div>
-        <div><strong>Criado em: </strong><span id="channel-created-at"></span></div>
+        <div class="response"><strong>Display Name: </strong><span id="channel-name"></span></div>
+        <div class="response"><strong>ID: </strong><span id="channel-id"></span></div>
+        <div class="response"><strong>Created at: </strong><span id="channel-created-at"></span></div>
       </div>
     </div>
     
     <script>
       const code = document.querySelector('#overlay-code');
-      const submit = document.querySelector('#submit');
+      const form = document.querySelector("#channel-form")
       const noCode = document.querySelector('#no-code');
       const results = document.querySelector('#results');
       const url = document.querySelector('#channel-url');
@@ -48,7 +50,8 @@
       const channelId = document.querySelector('#channel-id');
       const createdAt = document.querySelector('#channel-created-at');
       
-      submit.addEventListener('click', async (event) => {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
         results.style.display = 'none'
         noCode.style.display = 'none'
         
