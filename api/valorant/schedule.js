@@ -33,7 +33,8 @@ router.get('/', async (req, res) => {
       vct_masters: 'Masters',
       champions: 'Champions',
       ascension_americas: 'Ascension Americas',
-      game_changers_championship: 'Game Changers Championship'
+      game_changers_championship: 'Game Changers Championship',
+      vct_emea: 'VCT EMEA'
     }
 
     // In case query string "channel" does not exist, return an error message
