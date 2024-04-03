@@ -2,11 +2,10 @@
 // https://repl.c4ldas.com.br/api/valorant/schedule?&league=challengers_br&channel=$(channel)
 // https://api.henrikdev.xyz/valorant/v1/esports/schedule?league=vct_lock_in
 
-const fetch = require('node-fetch') // Using fetch to collect data from another API
+const fetch = require('node-fetch')
 const express = require('express')
 const router = express.Router()
-const { Temporal } = require('@js-temporal/polyfill'); // easier way to work with Date
-// let todayDate = Temporal.Now.plainDateTimeISO('America/Sao_Paulo') // Using Brazil time zone
+const { Temporal } = require('@js-temporal/polyfill'); // Easier way to work with Date
 
 // Defining colors for console:
 const clc = require("cli-color")
@@ -15,11 +14,10 @@ const green = clc.green
 const yellow = clc.yellow;
 
 router.get('/', async (req, res) => {
-  // const authorizedUsers = ['coreano', 'otsukaxd', 'nuuhfps', 'dannyjones', 'sacy', 'paulanobre']
 
   try {
     const timeZone = Temporal.TimeZone.from('America/Sao_Paulo'); // Using Brazil time zone
-    const todayDate = Temporal.Now.plainDateTimeISO(timeZone).toString(); // Time and date for Brazil time zone    
+    const todayDate = Temporal.Now.plainDateTimeISO(timeZone).toString(); // Time and date for Brazil time zone
     const channel = req.query.channel || null
     const league = req.query.league
 
@@ -79,16 +77,11 @@ router.get('/', async (req, res) => {
     let todayGames = []
 
     for (let x = 0; x < getLeague.data.length; x++) {
-
       dateGameConverted = timeZone.getPlainDateTimeFor(getLeague.data[x].date)
 
       if (dateGameConverted.toString().split('T')[0] == todayDate.split('T')[0]) {
         todayGames.push(getLeague.data[x])
       }
-
-      // if (getLeague.data[x].date.split('T')[0] == todayDate.split('T')[0]) {
-      //   todayGames.push(getLeague.data[x])
-      // }
     }
 
     // In case todayGames.length is empty, it means there is no game today
@@ -104,7 +97,6 @@ router.get('/', async (req, res) => {
 
     todayGames.forEach((game) => {
       const hour = new Date(timeZone.getPlainDateTimeFor(game.date).toString()).getHours()
-      // const hour = new Date(game.date).getHours() - 3;
       if (game.match.id != null) {
         const nameTeam1 = game.match.teams[0].name;
         const nameTeam2 = game.match.teams[1].name;
@@ -125,7 +117,6 @@ router.get('/', async (req, res) => {
     console.log(red(response + ' / ' + error))
     res.status(200).send(response)
   }
-
 })
 
 module.exports = router;
