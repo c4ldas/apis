@@ -94,20 +94,15 @@ router.get('/', async (req, res) => {
 
     // Get Solo 5x5 Rank info
     function getRank_SOLO_5x5(getRank){
-      if(getRank.length === 0){
-        return (nullValues)
-      }
-      for (let response of getRank) {
-        if (response.queueType == 'RANKED_SOLO_5x5') {
-          const { tier, rank, leaguePoints, wins, losses } = response;
-          return { tier, rank, leaguePoints, wins, losses };
-        }       
-      }
-      return (nullValues);
-    }
-    
+      const soloRank = getRank.find( (response) => response.queueType === "RANKED_SOLO_5x5")
+
+      if(!soloRank){ return nullValues }      
+      const { tier, rank, leaguePoints, wins, losses } = soloRank;
+      return { tier, rank, leaguePoints, wins, losses };
+    }    
     
   } catch (error) {
+    // Avoid the TOKEN to be leaked in error messages (it happened once)
     if (error.message.includes('RGAPI')) {
       console.log(`${new Date().toLocaleTimeString('en-UK')} - LOL ${channel} - ${error} Player: ${player}`)
       res.status(400).send('Wrong parameter values')      
