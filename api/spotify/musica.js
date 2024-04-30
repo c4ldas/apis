@@ -16,9 +16,9 @@ router.get('/:id', async (req, res) => {
 
   const refreshTokenDB = await db.get(req.params.id) || null
   const channel = req.query.channel || null
+  const format = req.query.format || "text"
 
   try {
-
     // User not registered in the API
     if (!refreshTokenDB) {
       throw new Error(`Usuário '${req.params.id}' não cadastrado!`);
@@ -47,25 +47,33 @@ router.get('/:id', async (req, res) => {
     });
 
     // Spotify not running (no song playing)
-    if (musicFetch.status == 204) {
-      throw new Error("Nenhuma música tocando no momento!");
-    }
+    if (musicFetch.status == 204) throw new Error("Nenhuma música tocando no momento!");
 
     const music = await musicFetch.json();
-    const song = music.item.name
-    const artists = music.item.artists.map(x => x.name).join(' & ')
-    const finalMessage = `${artists} - ${song}`
+    const song = music.item.name;
+    const isPlaying = music.is_playing;
+    const artists = music.item.artists.map(x => x.name).join(' & ');
+    let finalMessage = `${artists} - ${song}`;
     const noChannel = `Por favor peça para um moderador alterar o comando para: \
-      .me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/spotify/musica/${req.params.id}?channel=\$(channel)}`
+    .me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/spotify/musica/${req.params.id}?channel=\$(channel)}`;
 
+    if(format == "json"){
+      res.status(200).json(music);
+      return;
+    }
+
+    if(!isPlaying) throw new Error("Nenhuma música tocando no momento!");
+      
     // Channel not sent in the request
+    /*     
     if (!channel) {
       throw new Error(`${finalMessage} - ${noChannel}`);
     }
+    */
 
     // In case everything goes as expected
-    console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${req.query.channel} - ${artists} - ${song}`)
-    res.status(200).send(`${finalMessage}`)
+    console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${req.query.channel} - ${artists} - ${song}`);
+    res.status(200).send(`${finalMessage}`);
 
   } catch (error) {
     console.log(red(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${req.query.channel} - ${error.message}`));
