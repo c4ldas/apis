@@ -3,10 +3,12 @@ const router = express.Router();
 const fetch = require("node-fetch");
 // const { Innertube } = require("youtubei.js");
 
+// Index page
 router.get("/", async (req, res) => {
   res.render(__dirname + "/index.ejs");
 });
 
+// Search video ID information
 router.get("/search/:search", async (req, res) => {
   const videoId = req.params.search;
   const type = req.query.type || "json";
@@ -17,11 +19,12 @@ router.get("/search/:search", async (req, res) => {
     res.status(200).send(data);
     
   } catch (error) {
-    // console.log("Error in router.get /search/:search: ", error)
+    // console.log("Error in router.get /search/:search: ", error);
     res.status(200).send(`Request failed.`);
   }
 });
 
+// Get user channel information
 router.get("/:username", async (req, res) => {
   const username = req.params.username;
   const key = process.env.YOUTUBE_KEY;
@@ -50,6 +53,7 @@ router.get("/:username", async (req, res) => {
 });
 
 
+
 async function getVideoData(url, videoId, type) {
   try {
     const dataRequest = await fetch(url);
@@ -63,12 +67,19 @@ async function getVideoData(url, videoId, type) {
 
   } catch (error) {
     // console.error(error);
-    return "Request failed. Please check if the video ID is correct or try again later.";
+    if(type == "json") {
+      return { 
+        error: {
+          message: "Request Failed. Please check the video ID is correct or try again later.",
+          video_id: `${videoId}`,
+          code: 400
+        }
+      }
+    }
+    return `Request failed. Please check the video ID is correct or try again later. Video ID: ${videoId}`;
   }
 
 };
-
-
 
 
 async function getChannelByHandle(username) {
@@ -84,7 +95,7 @@ async function getChannelByHandle(username) {
     return channelId;
 
     // Using Youtubei.js library
-    //const resolved = await innerTube.resolveURL(`https://youtube.com/${username}`);
+    // const resolved = await innerTube.resolveURL(`https://youtube.com/${username}`);
     // console.log("Resolved:", resolved)
     // return resolved.payload.browseId;
   } catch (error) {
@@ -94,6 +105,7 @@ async function getChannelByHandle(username) {
     return 0;
   }
 }
+
 
 async function getChannelById(id, url, key) {
   try {
@@ -106,7 +118,5 @@ async function getChannelById(id, url, key) {
     return 0;
   }
 }
-
-
 
 module.exports = router;
