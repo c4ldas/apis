@@ -16,7 +16,7 @@ router.get('/:id', async (req, res) => {
 
   const refreshTokenDB = await db.get(req.params.id) || null
   const channel = req.query.channel || null
-  const format = req.query.format || "text"
+  const type = req.query.type || "text"
 
   try {
     // User not registered in the API
@@ -57,7 +57,7 @@ router.get('/:id', async (req, res) => {
     const noChannel = `Por favor peça para um moderador alterar o comando para: \
     .me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/spotify/musica/${req.params.id}?channel=\$(channel)}`;
 
-    if(format == "json"){
+    if(type == "json"){
       res.status(200).json(music);
       return;
     }
