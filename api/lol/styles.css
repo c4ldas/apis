@@ -99,3 +99,17 @@ td {
   padding: 10px;
   display: inline-block
 }
+
+.footer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* Center the footer content */
+  padding: 20px;
+  /* background-color: #f4f4f4; /* A light background for the footer */
+  background-color: hsla(0, 0%, 100%, .5);
+}
+
+.privacy {
+  font-size: 1.2rem;
+}

@@ -1,11 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-  <head>
+<head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-70x70.png" type="image/png">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500">
+  <link rel="icon" href="https://static-cdn.jtvnw.net/jtv_user_pictures/451dd285-491d-49e0-b1e0-20147f3ab56b-profile_image-70x70.png" type="image/png" >
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Quicksand:100,300,500" >
   <link rel="stylesheet" href="./styles.css">
   <title>Youtube ID</title>
 </head>
@@ -21,7 +20,7 @@
           <a href="https://github.com/c4ldas" target="_blank"><img class="icons" src="./../../images/github.svg" alt="github"></a> 
         </nav>
       </header>
-      
+      <main class="main">
       <h1 class="title">Youtube - Get channel ID </h1>
       <form id="channel-form">
         <div class="container-code"> 
@@ -38,6 +37,29 @@
         <div class="response"><strong>ID: </strong><span id="channel-id"></span></div>
         <div class="response"><strong>Created at: </strong><span id="channel-created-at"></span></div>
       </div>
+      </main>
+      <footer class="footer">
+        <nav class="navigation">
+          <a href="#"
+            ><img class="icons" src="/images/home.svg" alt="home"
+               /></a>
+          <a href="https://twitch.tv/c4ldas" target="_blank"
+            ><img class="icons" src="/images/twitch.svg" alt="twitch"
+               /></a>
+          <a href="https://youtube.com/c4ldas" target="_blank"
+            ><img class="icons" src="/images/youtube.svg" alt="youtube"
+               /></a>
+          <a href="https://instagram.com/c4ldas" target="_blank"
+            ><img class="icons" src="/images/instagram.svg" alt="instagram"
+               /></a>
+          <a href="https://github.com/c4ldas" target="_blank"
+            ><img class="icons" src="/images/github.svg" alt="github"
+               /></a>
+        </nav>
+        <div class="privacy">
+          <a href="/privacy.html">Privacy Policy</a>
+        </div>
+      </footer>
     </div>
     
     <script>
@@ -53,7 +75,7 @@
       
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
-        results.style.display = 'none'
+        results.style.visibility = 'hidden'
         noCode.style.display = 'none'
         
         console.log(code.value);
@@ -70,7 +92,7 @@
         name.innerText = result.title;
         channelId.innerText = result.channelId;
         createdAt.innerText = result.publishedAt ? new Date(result.publishedAt).toLocaleDateString('pt-BR') : null;
-        results.style.display = 'flex'
+        results.style.visibility = 'visible'
         
       })
     </script>
