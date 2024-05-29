@@ -61,6 +61,7 @@ router.get("/", async (req, res) => {
   const player = req.query.player;
   const tag = req.query.tag;
   const id = req.query.id;
+  const type = req.query.type || "text";
   const server = req.query.server || "br";
 
   try {
@@ -92,6 +93,8 @@ router.get("/", async (req, res) => {
 
       sendMessage(playerName, elo, pontos, posicao, vitorias);
     }
+
+    
 
     // Get Ranked elo and points
     async function getRankedData(urlRank, urlLeaderboard) {
@@ -140,6 +143,8 @@ router.get("/", async (req, res) => {
       return { playerName, currenttierpatched, elo, pontos, posicao, vitorias };
     }
 
+
+    
     //Send message back where it was requested
     async function sendMessage(player, elo, pontos, posicao, vitorias) {
       const finalMessage = msg
@@ -157,9 +162,26 @@ router.get("/", async (req, res) => {
         return;
       }
 
+      if(type == "json" || type == "overlay"){
+        const obj = { 
+          data: {
+            "name": player, 
+            "currenttierpatched": Object.keys(badges).find((x) => badges[x] == elo), 
+            "ranking_in_tier": pontos, 
+            "leaderboardRank": posicao, 
+            "numberOfWins": vitorias
+          }
+        }
+        res.status(200).json(obj);
+        console.log(`Channel: ${channel} - Valorant ${type} - ${JSON.stringify(obj)}`)
+        return;
+      }
       res.status(200).send(finalMessage);
       console.log(`${new Date().toLocaleTimeString("en-UK")} - Channel: ${channel} - ${finalMessage}`);
     }
+
+
+    
   } catch (error) {
     if (error.message.includes("Unexpected token < in JSON at position 0")) {
       res.status(200).send("Infelizmente, a API está fora do ar para mostrar o elo. Tente novamente mais tarde.");

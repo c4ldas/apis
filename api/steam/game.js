@@ -51,14 +51,14 @@ router.get("/", async (req, res) => {
       header_image: gameImage,
       timePlayed: playTime,
     });
-    res
-      .status(200)
-      .json({
+    
+    res.status(200).json({
         name: gameName,
         price: gamePrice,
         header_image: gameImage,
         timePlayed: playTime,
       });
+    
   } catch (error) {
     //if (error.startsWith('TypeError')){
     console.log(red(`${new Date().toLocaleTimeString("en-UK")} - Steam error: ${error}`));
