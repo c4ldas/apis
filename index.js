@@ -99,11 +99,8 @@ app.post("/spell", async (req, res) => {
 
 // Starting server
 const listener = app.listen(process.env.PORT, () => {
-  console.log("Listening on port " + listener.address().port);
-
-  // Starting my other repository seapi every 5 minutes
-  setInterval(async () => {
-    // fetch('https://seapi.c4ldas.com.br/ping')
-    fetch("https://teste.spellfiretv.repl.co");
-  }, 300000);
+  if (!process.env.REPLIT_DEPLOYMENT) {
+    console.log("URL: https://d2efe003-16bb-43b4-95b4-efa3cc9fd962-00-1j8xxu0x482vq.riker.replit.dev/")
+    console.log("Listening on port " + listener.address().port);
+  }
 });
