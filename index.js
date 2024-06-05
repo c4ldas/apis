@@ -73,9 +73,15 @@ app.get("/api", async (req, res) => {
   res.redirect("../");
 });
 
+// Google robot verification
 app.get("/robots.txt", async (req, res) => {
   res.sendFile(__dirname + "/robots.txt");
 });
+
+// Discord domain verification
+app.get("/.well-known/discord", async (req, res) => {
+  res.sendFile(__dirname + "/discord.txt")
+})
 
 app.post("/spell", async (req, res) => {
   console.log(req.body);
