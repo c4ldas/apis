@@ -30,7 +30,7 @@ router.get('/', async (req, res) => {
   for (i = 0; r.data.length; i++) {
     d = Math.abs(c - new Date(r.data[i].date));
     p = r.data[i].last_mmr_change;
-    if (d > (86400000/2)) {
+    if (d > (86400000 / 2)) {
       break;
     }
     p > 0 ? win += 1 : lose += 1;
@@ -52,3 +52,5 @@ router.get('/', async (req, res) => {
 })
 
 module.exports = router;
+
+// test test test 
