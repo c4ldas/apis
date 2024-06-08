@@ -64,11 +64,7 @@ app.get("/", async (req, res) => {
   res.sendFile(__dirname + "/index.html");
 });
 
-// Home page
-app.get("/old", async (req, res) => {
-  res.sendFile(__dirname + "/index_old.html");
-});
-
+// Redirect /api to home page
 app.get("/api", async (req, res) => {
   res.redirect("../");
 });
