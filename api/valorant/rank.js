@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
   const tag = req.query.tag;
   const id = req.query.id;
   const type = req.query.type || "text";
-  const server = req.query.server || req.query.region || "br";
+  
 
   try {
     // Activate maintenance mode
