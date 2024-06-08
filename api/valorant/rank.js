@@ -62,7 +62,7 @@ router.get("/", async (req, res) => {
   const tag = req.query.tag;
   const id = req.query.id;
   const type = req.query.type || "text";
-  const server = req.query.server || "br";
+  const server = req.query.server || req.query.region || "br";
 
   try {
     // Activate maintenance mode
@@ -143,8 +143,6 @@ router.get("/", async (req, res) => {
       return { playerName, currenttierpatched, elo, pontos, posicao, vitorias };
     }
 
-
-    
     //Send message back where it was requested
     async function sendMessage(player, elo, pontos, posicao, vitorias) {
       const finalMessage = msg
@@ -173,7 +171,7 @@ router.get("/", async (req, res) => {
           }
         }
         res.status(200).json(obj);
-        console.log(`Channel: ${channel} - Valorant ${type} - ${JSON.stringify(obj)}`)
+        console.log(`Channel: ${channel} - Valorant ${type} - ${obj.data.name}: ${obj.data.currenttierpatched}`)
         return;
       }
       res.status(200).send(finalMessage);
