@@ -8,5 +8,3 @@ API endpoints to connect to services like Spotify, Twitch, Valorant, etc. It is 
 # More information: 
 
 https://c4ldas.com.br
-
-...
