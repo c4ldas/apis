@@ -17,9 +17,9 @@
     "cli-color": "^2.0.3",
     "cors": "^2.8.5",
     "ejs": "^3.1.8",
-    "express": "^4.18.1",
+    "express": "^4.19.2",
     "iconv-lite": "^0.6.3",
-    "node-fetch": "^2.6.7",
+    "node-fetch": "^2.7.0",
     "uuid": "^8.3.2",
     "youtubei.js": "^6.4.1"
   }
