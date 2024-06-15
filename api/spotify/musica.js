@@ -54,8 +54,8 @@ router.get('/:id', async (req, res) => {
     const isPlaying = music.is_playing;
     const artists = music.item.artists.map(x => x.name).join(' & ');
     let finalMessage = `${artists} - ${song}`;
-    const noChannel = `Por favor peça para um moderador alterar o comando para: \
-    .me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/spotify/musica/${req.params.id}?channel=\$(channel)}`;
+    /* const noChannel = `Por favor peça para um moderador alterar o comando para: \
+    .me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/spotify/musica/${req.params.id}?channel=\$(channel)}`; */
 
     if(type == "json"){
       res.status(200).json(music);
