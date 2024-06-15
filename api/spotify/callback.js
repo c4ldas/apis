@@ -24,8 +24,6 @@ router.get('/', async (req, res) => {
     })
   })
   const getTokenJson = await getTokenFetch.json();
-
-  console.log("getTokenJson: ", getTokenJson)
   
   const me = await fetch('https://api.spotify.com/v1/me', {
     'method': 'GET',
@@ -35,13 +33,11 @@ router.get('/', async (req, res) => {
     },    
   })
   const meFetch = await me.json()
-  // console.log('About me: ', meFetch)
 
   const id = meFetch.id
   const displayName = meFetch.display_name
   const token = getTokenJson.access_token
   const refreshToken = getTokenJson.refresh_token
-
   
   const values = {
     _displayName: displayName,
@@ -49,15 +45,9 @@ router.get('/', async (req, res) => {
     _refreshToken: refreshToken,
   }
 
-  console.log("Line 52 values");
-  console.log("id: ", id);
-  console.log("values: ", values);
-  console.log(db)
-  console.log("await db.set(id, values)");
+  console.log(`ID: ${id}, displayName: ${_displayName}`);
   await db.set(id, values);
-  console.log(values);
   res.render(__dirname + '/callback.ejs', { displayName: displayName, id: id });
-
   
 })
 
