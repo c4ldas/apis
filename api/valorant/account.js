@@ -20,8 +20,8 @@ router.get("/", async (req, res) => {
     res.status(200).send(account);
     
   } catch (error) {
-    console.log(error);
-    res.status(400).send({ error: "Not Found" });
+    console.log("Error: ", error);
+    res.status(500).send({ error: "Internal server error" });
   }
 })
 
