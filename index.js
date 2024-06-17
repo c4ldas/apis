@@ -41,6 +41,7 @@ app.use("/api/valorant", require("./api/valorant"));
 app.use("/api/valorant/rank", require("./api/valorant/rank"));
 app.use("/api/valorant/schedule", require("./api/valorant/schedule"));
 app.use("/api/valorant/history", require("./api/valorant/history"));
+app.use("/api/valorant/account", require("./api/valorant/account"));
 
 // Twitch things
 app.use("/api/twitch", require("./api/twitch"));

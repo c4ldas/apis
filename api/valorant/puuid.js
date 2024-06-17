@@ -18,7 +18,9 @@ async function obterPuuid(event) {
     return
   }
 
-  const getPuuidFetch = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${username.value}/${tagline.value}`)
+  // const getPuuidFetch = await fetch(`https://api.henrikdev.xyz/valorant/v1/account/${username.value}/${tagline.value}`)
+  const getPuuidFetch = await fetch(`/api/valorant/account?player=${username.value}&tag=${tagline.value}`)
+  
   const getPuuid = await getPuuidFetch.json()
   console.log(getPuuid)
 
