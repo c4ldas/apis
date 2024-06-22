@@ -1,14 +1,14 @@
-const express = require('express')
-const fetch = require('node-fetch')
-const router = express.Router()
+const express = require('express');
+const fetch = require('node-fetch');
+const router = express.Router();
 
-const Database = require("@replit/database")
-const db = new Database()
+const Database = require("@replit/database");
+const db = new Database();
 
 const { v4: uuidv4 } = require('uuid');
 
 router.get('/', async (req, res) => {
-  console.log(req.query)
+  console.log(req.query);
 
   if (!req.query.code || req.query.error) {
     res.send(`Aplicação não foi aceita: ${req.query.error}
@@ -28,7 +28,7 @@ router.get('/', async (req, res) => {
       redirect_uri: process.env.TWITCH_REDIRECT_URI
     }), { method: 'POST' })
 
-  const tokenInfo = await getTokenFetch.json()
+  const tokenInfo = await getTokenFetch.json();
 
   // Get user information based on access token
   const getchannelInfoFetch = await fetch(`https://api.twitch.tv/helix/users`, {
@@ -39,18 +39,18 @@ router.get('/', async (req, res) => {
       'Content-Type': 'application/json',
     },
   })
-  const getChannelInfo = await getchannelInfoFetch.json()
-  const id = getChannelInfo.data[0].id
-  const username = getChannelInfo.data[0].login
+  const getChannelInfo = await getchannelInfoFetch.json();
+  const id = getChannelInfo.data[0].id;
+  const username = getChannelInfo.data[0].login;
 
   // Check if the user is already on database.
-  const userDb = await db.get(`twitch_${username}`)
+  const userDb = await db.get(`twitch_${username}`);
 
   // If it is already registered, do not generate new code but save the new token information
-  code = userDb ? userDb.code : uuidv4().replace(/-/g, '')
+  code = userDb ? userDb.code : uuidv4().replace(/-/g, '');
 
   // Saving data to add to database
-  const dbStore = { code: code, username: username, id: id, access_token: tokenInfo.access_token, refresh_token: tokenInfo.refresh_token }
+  const dbStore = { code: code, username: username, id: id, access_token: tokenInfo.access_token, refresh_token: tokenInfo.refresh_token };
 
   // Saving the ID as key and the data object (code, username, access token and refresh token) as values
   db.set(`twitch_${username}`, dbStore).then(() => {
