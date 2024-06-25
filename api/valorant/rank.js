@@ -156,7 +156,7 @@ router.get("/", async (req, res) => {
 
       if (!channel || channel == "${channel}") {
         res.send(`${finalMessage} - ${noChannel}`);
-        console.log(`${new Date().toLocaleTimeString( "en-UK")} - ${finalMessage} - ${noChannel}`);
+        console.log(`Valorant ${type} - ${finalMessage} - ${noChannel}`);
         return;
       }
 
@@ -171,11 +171,11 @@ router.get("/", async (req, res) => {
           }
         }
         res.status(200).json(obj);
-        console.log(`Channel: ${channel} - Valorant ${type} - ${obj.data.name}: ${obj.data.currenttierpatched}`)
+        console.log(`Valorant ${type} - Channel: ${channel} - ${player}#${tag}: ${obj.data.currenttierpatched}`)
         return;
       }
       res.status(200).send(finalMessage);
-      console.log(`${new Date().toLocaleTimeString("en-UK")} - Channel: ${channel} - ${finalMessage}`);
+      console.log(`Valorant ${type} - Channel: ${channel} - ${player}#${tag} - ${finalMessage}`);
     }
 
 
