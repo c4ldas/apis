@@ -80,19 +80,10 @@ app.get("/.well-known/discord", async (req, res) => {
   res.sendFile(__dirname + "/discord.txt")
 })
 
-app.post("/spell", async (req, res) => {
-  console.log(req.body);
-  console.log(typeof req.body);
-  res.status(200).json(req.body);
-});
-
-// app.get('/teste', async (req, res) => {
-//   const message = "hello, how are you?"
-//   const seconds = 5
-//     setTimeout( () => {
-//     res.send(message)
-//   }, seconds * 1000)
-// })
+// Send file
+app.get("/checking", async (req, res) => {
+  res.sendFile(__dirname + "/images/screenshot.png")
+})
 
 // Starting server
 const listener = app.listen(process.env.PORT, () => {
