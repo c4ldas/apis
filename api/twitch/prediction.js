@@ -29,8 +29,9 @@ router.get('/create/:code', async (req, res) => {
   const question = req.query.question || null
   const option1 = req.query.option1
   const option2 = req.query.option2
+  const option3 = req.query.option3 || null
   const code = req.params.code
-  const newPrediction = await createNewPrediction(code, channel, question, option1, option2)
+  const newPrediction = await createNewPrediction(code, channel, question, option1, option2, option3)
 
   console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${newPrediction}`)
   res.status(200).send(newPrediction)
@@ -87,12 +88,18 @@ async function databaseQuery(channel, code) {
 
 
 // Create Prediction
-async function createNewPrediction(code, channel, question, option1, option2) {
+async function createNewPrediction(code, channel, question, option1, option2, option3) {
 
   const values = await databaseQuery(channel, code)
   if (values.erro) return values.erro
 
   const newToken = await generateNewToken(channel, values.refresh_token)
+
+  const possibleOutcomes = [
+    { 'title': option1 },
+    { 'title': option2 },
+    ...(option3 != null ? [{ 'title': option3 }] : [])
+  ];
 
   const createPredictionFetch = await fetch('https://api.twitch.tv/helix/predictions', {
     method: 'POST',
@@ -105,11 +112,7 @@ async function createNewPrediction(code, channel, question, option1, option2) {
       'broadcaster_id': values.id,
       'title': question !== null ? question : 'Quem ganha esse mapa?',
       'prediction_window': 300,
-      'outcomes':
-        [
-          { 'title': option1 },
-          { 'title': option2 }
-        ],
+      'outcomes': possibleOutcomes
     })
   });
 
@@ -120,7 +123,8 @@ async function createNewPrediction(code, channel, question, option1, option2) {
     return 'Erro: Já existe aposta/palpite ativo, não é possível abrir novamente!'
   }
   // console.log(createPrediction)
-  return `Aposta/Palpite criado. Opções: ${option1} / ${option2}`
+  const options = `${option1} / ${option2}${option3 ? ` / ${option3}` : ''}`;
+  return `Aposta/Palpite criado. Opções: ${options}`
 }
 
 
@@ -188,10 +192,17 @@ async function closePrediction(code, channel, winner) {
     outcomeWinner = winner
     outcomeWinnerId = getCurrentPrediction.outcomes[0].id
     outcomeWinnerTitle = getCurrentPrediction.outcomes[0].title
+    
   } else if (winner === getCurrentPrediction.outcomes[1].title || winner === "2") {
     outcomeWinner = winner
     outcomeWinnerId = getCurrentPrediction.outcomes[1].id
     outcomeWinnerTitle = getCurrentPrediction.outcomes[1].title
+    
+  } else if (winner === getCurrentPrediction.outcomes[2].title || winner === "3") {
+    outcomeWinner = winner
+    outcomeWinnerId = getCurrentPrediction.outcomes[2].id
+    outcomeWinnerTitle = getCurrentPrediction.outcomes[2].title
+    
   } else {
     return `Opção inválida ${winner}`
   }
