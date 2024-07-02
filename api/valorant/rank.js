@@ -78,9 +78,9 @@ router.get("/", async (req, res) => {
       urlLeaderboard = `https://api.henrikdev.xyz/valorant/v2/leaderboard/${server}?puuid=${id}`;
 
       const rankInfo = await getRankedData(urlRank, urlLeaderboard);
-      const { playerName, elo, pontos, posicao, vitorias } = rankInfo;
+      const { playerName, playerTag, elo, pontos, posicao, vitorias } = rankInfo;
 
-      sendMessage(playerName, elo, pontos, posicao, vitorias);
+      sendMessage(playerName, playerTag, elo, pontos, posicao, vitorias);
     }
 
     // Look for player using player name and tagname
@@ -89,9 +89,9 @@ router.get("/", async (req, res) => {
       urlLeaderboard = `https://api.henrikdev.xyz/valorant/v2/leaderboard/${server}?name=${player}&tag=${tag}`;
 
       const rankInfo = await getRankedData(urlRank, urlLeaderboard);
-      const { playerName, elo, pontos, posicao, vitorias } = rankInfo;
+      const { playerName, playerTag, elo, pontos, posicao, vitorias } = rankInfo;
 
-      sendMessage(playerName, elo, pontos, posicao, vitorias);
+      sendMessage(playerName, playerTag, elo, pontos, posicao, vitorias);
     }
 
     
@@ -115,6 +115,7 @@ router.get("/", async (req, res) => {
       }
 
       const playerName = getRank.data.name;
+      const playerTag = getRank.data.tag;
       const currenttierpatched = getRank.data ? getRank.data.currenttierpatched : "Unrated";
       const elo = badges[currenttierpatched];
       const pontos = getRank.data ? getRank.data.ranking_in_tier : 0;
@@ -122,7 +123,7 @@ router.get("/", async (req, res) => {
       if (!elo.startsWith("Imortal") && elo != "Radiante") {
         const vitorias = 0;
         const posicao = 0;
-        return { playerName, currenttierpatched, elo, pontos, posicao, vitorias };
+        return { playerName, playerTag, currenttierpatched, elo, pontos, posicao, vitorias };
       }
 
       const getLeaderboardFetch = await fetch(`${urlLeaderboard}`, {
@@ -135,16 +136,16 @@ router.get("/", async (req, res) => {
       if (getLeaderboard.status != 200) {
         const posicao = 0;
         const vitorias = 0;
-        return { playerName, currenttierpatched, elo, pontos, posicao, vitorias };
+        return { playerName, playerTag, currenttierpatched, elo, pontos, posicao, vitorias };
       }
 
       const vitorias = getLeaderboard.data[0].numberOfWins;
       const posicao = getLeaderboard.data[0].leaderboardRank;
-      return { playerName, currenttierpatched, elo, pontos, posicao, vitorias };
+      return { playerName, playerTag, currenttierpatched, elo, pontos, posicao, vitorias };
     }
 
     //Send message back where it was requested
-    async function sendMessage(player, elo, pontos, posicao, vitorias) {
+    async function sendMessage(player, playerTag, elo, pontos, posicao, vitorias) {
       const finalMessage = msg
         .replace(/\(player\)/g, player)
         .replace(/\(pontos\)/g, pontos)
@@ -152,18 +153,19 @@ router.get("/", async (req, res) => {
         .replace(/\(vitorias\)/g, vitorias)
         .replace(/\(posicao\)/g, posicao);
 
-      const noChannel = `Por favor peça para um moderador alterar o comando para: \.me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/valorant/rank?channel=\$(channel)&player=${player}&tag=${tag}&msg="${msg}"}`;
-
-      if (!channel || channel == "${channel}") {
-        res.send(`${finalMessage} - ${noChannel}`);
-        console.log(`Valorant ${type} - ${finalMessage} - ${noChannel}`);
-        return;
-      }
+      // const noChannel = `Por favor peça para um moderador alterar o comando para: \.me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/valorant/rank?channel=\$(channel)&player=${player}&tag=${playerTag}&msg="${msg}"}`;
+      
+      // if (!channel || channel == "${channel}") {
+      //   res.send(`${finalMessage} - ${noChannel}`);
+      //   console.log(`Valorant ${type} - ${finalMessage} - ${noChannel}`);
+      //   return;
+      // }
 
       if(type == "json" || type == "overlay"){
         const obj = { 
           data: {
             "name": player, 
+            "tag": playerTag,
             "currenttierpatched": Object.keys(badges).find((x) => badges[x] == elo), 
             "ranking_in_tier": pontos, 
             "leaderboardRank": posicao, 
@@ -171,13 +173,12 @@ router.get("/", async (req, res) => {
           }
         }
         res.status(200).json(obj);
-        console.log(`Valorant ${type} - Channel: ${channel} - ${player}#${tag}: ${obj.data.currenttierpatched}`)
+        console.log(`Valorant ${type} - Channel: ${channel} - ${player}#${playerTag}: ${obj.data.currenttierpatched}`)
         return;
       }
       res.status(200).send(finalMessage);
-      console.log(`Valorant ${type} - Channel: ${channel} - ${player}#${tag} - ${finalMessage}`);
+      console.log(`Valorant ${type} - Channel: ${channel} - ${player}#${playerTag} - ${finalMessage}`);
     }
-
 
     
   } catch (error) {
