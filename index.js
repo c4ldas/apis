@@ -80,11 +80,6 @@ app.get("/.well-known/discord", async (req, res) => {
   res.sendFile(__dirname + "/discord.txt")
 })
 
-// Send file
-app.get("/checking", async (req, res) => {
-  res.sendFile(__dirname + "/images/screenshot.png")
-})
-
 // Starting server
 const listener = app.listen(process.env.PORT, () => {
   if (!process.env.REPLIT_DEPLOYMENT) {
