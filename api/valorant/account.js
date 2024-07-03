@@ -1,4 +1,3 @@
-const fetch = require("node-fetch"); // Using fetch to collect data from another API
 const express = require("express");
 const router = express.Router();
 

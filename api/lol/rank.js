@@ -1,6 +1,5 @@
 // https://repl.c4ldas.com.br/api/lol/rank?channel=$(channel)&region=br1&player=kzc&tag=123&type=json
 
-const fetch = require('node-fetch')
 const express = require('express')
 const router = express.Router()
 

@@ -1,7 +1,5 @@
 // https://repl.c4ldas.com.br/api/valorant/history?server=na&player=xaiomy&tag=123&channel=$(channel)&msg="Username is (upDown) (mmr)RR. He's (win)-(lose) in the last 24 hours"
 
-
-const fetch = require('node-fetch') // Using fetch to collect data from another API
 const express = require('express')
 const router = express.Router()
 const clc = require('cli-color') // colors in console

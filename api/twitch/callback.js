@@ -1,11 +1,10 @@
 const express = require('express');
-const fetch = require('node-fetch');
 const router = express.Router();
 
 const Database = require("@replit/database");
 const db = new Database();
 
-const { v4: uuidv4 } = require('uuid');
+// const { v4: uuidv4 } = require('uuid');
 
 router.get('/', async (req, res) => {
   console.log(req.query);
@@ -47,7 +46,8 @@ router.get('/', async (req, res) => {
   const userDb = await db.get(`twitch_${username}`);
 
   // If it is already registered, do not generate new code but save the new token information
-  code = userDb ? userDb.code : uuidv4().replace(/-/g, '');
+  // code = userDb ? userDb.code : uuidv4().replace(/-/g, '');
+  code = userDb ? userDb.code : crypto.randomUUID().replace(/-/g, '');
 
   // Saving data to add to database
   const dbStore = { code: code, username: username, id: id, access_token: tokenInfo.access_token, refresh_token: tokenInfo.refresh_token };

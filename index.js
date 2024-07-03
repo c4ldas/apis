@@ -1,7 +1,6 @@
 const express = require("express"); // Express server
 const app = express();
 const cors = require("cors");
-const fetch = require("node-fetch");
 app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
@@ -83,7 +82,7 @@ app.get("/.well-known/discord", async (req, res) => {
 // Starting server
 const listener = app.listen(process.env.PORT, () => {
   if (!process.env.REPLIT_DEPLOYMENT) {
-    console.log("URL: https://d2efe003-16bb-43b4-95b4-efa3cc9fd962-00-1j8xxu0x482vq.riker.replit.dev/")
     console.log("Listening on port " + listener.address().port);
+    console.log(`Dev URL: \nhttps://${process.env.REPLIT_DEV_DOMAIN}`); 
   }
 });

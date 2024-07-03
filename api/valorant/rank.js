@@ -12,16 +12,9 @@ Example:
 https://repl.c4ldas.com.br/api/valorant/rank?channel=$(channel)&player=Loud%20Coreano&tag=LLL&msg='(player) tem (pontos) pontos e tá (rank).'
 *************************************************/
 
-const fetch = require("node-fetch"); // Using fetch to collect data from another API
 const express = require("express");
 const router = express.Router();
 const iconv = require("iconv-lite"); // Character decoding
-// const clc = require('cli-color') // colors in console
-
-// Defining colors for console:
-// const red = clc.red
-// const green = clc.green
-// const yellow = clc.yellow;
 
 const badges = {
   "Unrated": "Sem rank/elo",

@@ -1,4 +1,3 @@
-
 // Comando para criar palpite/aposta:
 // https://repl.c4ldas.com.br/api/twitch/prediction/create/CODE/?channel=${channel}&option1=${1}&option2=${2}&question=${queryescape ${3:|Quem ganha esse mapa?}}
 
@@ -13,10 +12,8 @@
 
 const express = require('express')
 const router = express.Router()
-const fetch = require('node-fetch')
 const Database = require("@replit/database")
 const db = new Database()
-
 
 router.get('/', async (req, res) => {
   res.status(302).redirect('../twitch/')
@@ -33,7 +30,7 @@ router.get('/create/:code', async (req, res) => {
   const code = req.params.code
   const newPrediction = await createNewPrediction(code, channel, question, option1, option2, option3)
 
-  console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${newPrediction}`)
+  console.log(`Twitch Prediction - Channel: ${channel} - ${newPrediction}`)
   res.status(200).send(newPrediction)
 })
 
@@ -45,7 +42,7 @@ router.get('/close/:code', async (req, res) => {
   const code = req.params.code
   const result = await closePrediction(code, channel, winner)
 
-  console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${result}`)
+  console.log(`Twitch Prediction - Channel: ${channel} - ${result}`)
   res.status(200).send(result)
 })
 
@@ -55,11 +52,9 @@ router.get('/cancel/:code', async (req, res) => {
   const code = req.params.code
   const result = await cancelPrediction(code, channel)
 
-  console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${result}`)
+  console.log(`Twitch Prediction - Channel: ${channel} - ${result}`)
   res.status(200).send(result)
 })
-
-
 
 // [TESTE] Get open prediction
 router.get('/get/:code', async (req, res) => {
@@ -67,14 +62,14 @@ router.get('/get/:code', async (req, res) => {
   const code = req.params.code
   const result = await getOpenPrediction(channel, code)
 
-  console.log(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${JSON.stringify(result, null, 2)}`)
+  console.log(`Twitch Prediction - Channel: ${channel} - ${JSON.stringify(result, null, 2)}`)
   res.status(200).send(result.currentPrediction)
 })
 
 
-/*************************************************
+/************************************************/
 //                 Functions                    //
-*************************************************/
+/************************************************/
 
 // Database
 async function databaseQuery(channel, code) {
@@ -119,10 +114,9 @@ async function createNewPrediction(code, channel, question, option1, option2, op
   const createPrediction = await createPredictionFetch.json()
 
   if (createPrediction.status) {
-    //console.log(createPrediction)
     return 'Erro: Já existe aposta/palpite ativo, não é possível abrir novamente!'
   }
-  // console.log(createPrediction)
+  
   const options = `${option1} / ${option2}${option3 ? ` / ${option3}` : ''}`;
   return `Aposta/Palpite criado. Opções: ${options}`
 }
@@ -229,7 +223,6 @@ async function closePrediction(code, channel, winner) {
 }
 
 
-
 // Cancel Prediction
 async function cancelPrediction(code, channel) {
 
@@ -255,10 +248,8 @@ async function cancelPrediction(code, channel) {
   });
 
   const result = await cancelarAposta.json();
-  // console.log(result)
 
   if (result.status) {
-    // console.log({ erro: 'Não há palpites para encerrar!' })
     return 'Não há palpites para cancelar!'
   }
   return `Aposta/Palpite cancelado`
