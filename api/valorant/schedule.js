@@ -2,7 +2,6 @@
 // https://repl.c4ldas.com.br/api/valorant/schedule?&league=challengers_br&channel=$(channel)
 // https://api.henrikdev.xyz/valorant/v1/esports/schedule?league=vct_lock_in
 
-const fetch = require('node-fetch')
 const express = require('express')
 const router = express.Router()
 const { Temporal } = require('@js-temporal/polyfill'); // Easier way to work with Date

@@ -13,7 +13,6 @@
 
 const express = require('express')
 const router = express.Router()
-const fetch = require('node-fetch')
 const Database = require("@replit/database")
 const db = new Database()
 

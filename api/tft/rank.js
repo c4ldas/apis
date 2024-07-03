@@ -1,6 +1,5 @@
 // https://repl.c4ldas.com.br/api/tft/rank?channel=$(channel)&region=br1&player=kzc&type=json
 
-const fetch = require('node-fetch') // Using fetch to collect data from another API
 const express = require('express')
 const router = express.Router()
 const clc = require("cli-color") // colors in console

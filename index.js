@@ -1,7 +1,6 @@
 const express = require("express"); // Express server
 const app = express();
 const cors = require("cors");
-const fetch = require("node-fetch");
 app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
