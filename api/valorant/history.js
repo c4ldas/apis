@@ -1,4 +1,4 @@
-// https://repl.c4ldas.com.br/api/valorant/history?server=na&player=xaiomy&tag=123&channel=$(channel)&msg="Username is (upDown) (mmr)RR. He's (win)-(lose) in the last 24 hours"
+// https://repl.c4ldas.com.br/api/valorant/history?server=na&player=xaiomy&tag=123&channel=$(channel)&msg="(player) is (upDown) (mmr)RR. He's (win)-(lose) in the last 12 hours"
 
 const express = require('express')
 const router = express.Router()
@@ -7,19 +7,24 @@ const iconv = require('iconv-lite') // Character decoding
 
 
 router.get('/', async (req, res) => {
-
   const channel = req.query.channel || null
   // const msg = req.query.msg || '(player) tem (pontos) pontos e tá (rank)'
   const rawMsg = req.query.msg ? decodeURIComponent(req.query.msg) : '(player) is (upDown) (mmr)RR. Last 12 hours: (win)-(lose)'
-  const msg = iconv.decode(Buffer.from(rawMsg, 'latin1'), 'utf-8'); // Converts the mesage from utf-8 to latin1 (or iso8891-1) to support latin characteres. 
-
+  const msg = iconv.decode(Buffer.from(rawMsg, 'latin1'), 'latin1'); // Converts the mesage from utf-8 to latin1 (or iso8891-1) to support latin characteres. 
   const player = req.query.player;
   const tag = req.query.tag;
   const id = req.query.id;
   const server = req.query.server || 'br';
-
-  const history = await fetch(`https://api.henrikdev.xyz/valorant/v1/lifetime/mmr-history/${server}/${player}/${tag}?size=15`);
-  const r = await history.json()
+  
+  try {
+    
+  const history = await fetch(`https://api.henrikdev.xyz/valorant/v1/lifetime/mmr-history/${server}/${player}/${tag}?size=15`, {
+    "method": "GET",
+    "headers": {
+      "Authorization": process.env.VALORANT_API_TOKEN
+    }
+  });
+  const r = await history.json();
   m = 0;
   win = 0;
   lose = 0;
@@ -45,7 +50,15 @@ router.get('/', async (req, res) => {
     .replace(/\(lose\)/g, lose)
 
   res.status(200).send(finalMessage)
-  console.log(`Channel: ${channel} - ${finalMessage}`)
+  console.log(`Valorant history - Channel: ${channel} - ${finalMessage}`);
+    
+  } catch (error) {
+    // console.log(error);
+    const finalMessage = "It was not possible to retrieve the matches for the last 12 hours. Try again later."
+    
+    console.log(`Valorant history - Channel: ${channel} - ${finalMessage}`);
+    res.status(200).send(finalMessage);
+  }
 
 })
 
