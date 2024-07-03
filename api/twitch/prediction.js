@@ -180,32 +180,29 @@ async function getOpenPrediction(channel, code) {
 
 // Close Prediction
 async function closePrediction(code, channel, winner) {
+  const getPrediction = await getOpenPrediction(channel, code);
+  if (getPrediction === 'Code inválido!') return getPrediction;
 
-  const getPrediction = await getOpenPrediction(channel, code)
-  if (getPrediction === 'Code inválido!') return getPrediction
+  const broadcasterId = getPrediction.broadcasterId;
+  const getCurrentPrediction = getPrediction.currentPrediction;
+  const predictionId = getCurrentPrediction.id;
 
-  const broadcasterId = getPrediction.broadcasterId
-  const getCurrentPrediction = getPrediction.currentPrediction
-  const predictionId = getCurrentPrediction.id
+  // Map outcomes with corresponding index strings
+  const outcomesMap = getCurrentPrediction.outcomes.map((outcome, index) => ({
+    ...outcome,
+    indexStr: (index + 1).toString()
+  }));
 
-  if (winner === getCurrentPrediction.outcomes[0].title || winner === "1") {
-    outcomeWinner = winner
-    outcomeWinnerId = getCurrentPrediction.outcomes[0].id
-    outcomeWinnerTitle = getCurrentPrediction.outcomes[0].title
-    
-  } else if (winner === getCurrentPrediction.outcomes[1].title || winner === "2") {
-    outcomeWinner = winner
-    outcomeWinnerId = getCurrentPrediction.outcomes[1].id
-    outcomeWinnerTitle = getCurrentPrediction.outcomes[1].title
-    
-  } else if (winner === getCurrentPrediction.outcomes[2].title || winner === "3") {
-    outcomeWinner = winner
-    outcomeWinnerId = getCurrentPrediction.outcomes[2].id
-    outcomeWinnerTitle = getCurrentPrediction.outcomes[2].title
-    
-  } else {
-    return `Opção inválida ${winner}`
+  const outcome = outcomesMap.find(outcome => 
+    winner === outcome.title || winner === outcome.indexStr
+  );
+
+  if (!outcome) {
+    return `Opção inválida ${winner}`;
   }
+
+  const outcomeWinnerId = outcome.id;
+  const outcomeWinnerTitle = outcome.title;
 
   const fecharAposta = await fetch(`https://api.twitch.tv/helix/predictions?broadcaster_id=${broadcasterId}`, {
     "method": "PATCH",
@@ -215,21 +212,22 @@ async function closePrediction(code, channel, winner) {
       "Content-Type": "application/json"
     },
     "body": JSON.stringify({
-      'broadcaster_id': broadcasterId,
-      'status': 'RESOLVED',
-      'id': predictionId,
-      'winning_outcome_id': outcomeWinnerId
+      "broadcaster_id": broadcasterId,
+      "status": "RESOLVED",
+      "id": predictionId,
+      "winning_outcome_id": outcomeWinnerId
     })
   });
 
   const result = await fecharAposta.json();
-  //console.log(result)
 
   if (result.status) {
-    return 'Não há palpites para encerrar!'
+    return 'Não há palpites para encerrar!';
   }
-  return `Resultado pago e encerrado! Opção vencedora: ${outcomeWinnerTitle}`
+
+  return `Resultado pago e encerrado! Opção vencedora: ${outcomeWinnerTitle}`;
 }
+
 
 
 // Cancel Prediction
