@@ -23,10 +23,25 @@
       </header>
       <main class="main">
       <h1>Autenticado!</h1>
-      <h3 style="color:red;">Não deixe esse comando visível e dê permissão apenas para moderadores, caso contrário outros podem abrir e fechar apostas.<br/>
-Envie para um moderador que tenha acesso ao dashboard do Streamelements para poder criar os comandos.<br/>
-Não crie o comando diretamente pelo chat pois o comando é único pra cada streamer!</h3>
- 
+      <h3 style="color:red;">- Não deixe esse comando visível e dê permissão apenas para moderadores, caso contrário outros podem abrir e fechar apostas.<br/>
+- Use o dashboard do Streamelements para criar os comandos.<br/>
+- Não crie o comando diretamente pelo chat para não expor seu code!</h3>
+
+        
+      <button id="remove-integration" style="color:red;">Remover integração</button>
+
+      <!-- pop-up dialog box, containing a form -->
+      <dialog id="dialog" class="dialog">
+        <div id="dialog-title">  
+          Tem certeza que deseja remover a integração?<br/>          
+          Você pode refazer a integração a qualquer momento no futuro.
+        </div>
+        <div id="dialog-buttons">
+          <button id="submit" type="submit">Confirmar</button>
+          <button id="cancel" type="reset">Cancel</button>
+        </div>
+      </dialog>
+        
       <h2>Code:</h2>
       <details>
         <summary>Mostrar Code:</summary>
@@ -84,5 +99,70 @@ Não crie o comando diretamente pelo chat pois o comando é único pra cada stre
         </div>
       </footer>
     </div>
+    <script>
+      const button = document.querySelector("#remove-integration");
+      const dialog = document.querySelector("#dialog");
+      const submit = document.querySelector("#submit");
+      const cancel = document.querySelector("#cancel");
+      
+      button.addEventListener("click", (e) => {
+        dialog.showModal();
+      })
+
+     // dialog.addEventListener("click", (e) => {
+     //   const xClick = e.clientX;
+     //   const yClick = e.clientY;
+     //   
+     //   const left = dialog.offsetLeft;
+     //   const right = dialog.offsetLeft + dialog.clientWidth;
+     //   const top = dialog.offsetTop;
+     //   const bottom = dialog.offsetTop + dialog.clientHeight;
+     //   if( (xClick < left || xClick > right) || (yClick < top || yClick > bottom) ){
+     //     dialog.close();
+     //   }
+     // })
+
+      cancel.addEventListener("click", (e) => {
+        dialog.close();
+      })
+
+      submit.addEventListener("click", async (e) => {
+        e.preventDefault();
+        const user_key = "<%= user_key %>";
+        const code = "<%= code %>";
+        const dialogTitle = document.querySelector("#dialog-title");
+        const dialogButtons = document.querySelector("#dialog-buttons");
+
+        dialogTitle.innerText = "Removendo integração, por favor aguarde!";
+        dialogButtons.style.display = "none";
+        
+        const request = await fetch("/api/twitch/logout", {
+          "method": "POST",
+          "headers": {
+            "Content-Type": "application/json"
+          },
+          "body": JSON.stringify({ user_key, code })
+        });
+        const response = await request.json();
+
+        if(response.status == "success"){
+          dialog.classList.add("success");
+          dialogTitle.innerText = `${response.message}. Redirecionando para página inicial...`;
+          setTimeout( () => {
+            window.location.assign("/api/twitch");
+          }, 3000);
+          
+        } else {
+          dialog.classList.add("fail");
+          dialogTitle.innerText = `${response.message}.`;
+          setTimeout( () => {
+            window.location.reload();
+          }, 2500);
+        }
+      });
+    </script>
   </body>
 </html>
+
+
+
