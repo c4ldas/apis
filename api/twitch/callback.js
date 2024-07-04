@@ -1,14 +1,9 @@
 const express = require('express');
 const router = express.Router();
-
 const Database = require("@replit/database");
 const db = new Database();
 
-// const { v4: uuidv4 } = require('uuid');
-
 router.get('/', async (req, res) => {
-  console.log(req.query);
-
   if (!req.query.code || req.query.error) {
     res.send(`Aplicação não foi aceita: ${req.query.error}
               <br/>
@@ -46,17 +41,18 @@ router.get('/', async (req, res) => {
   const userDb = await db.get(`twitch_${username}`);
 
   // If it is already registered, do not generate new code but save the new token information
-  // code = userDb ? userDb.code : uuidv4().replace(/-/g, '');
-  code = userDb ? userDb.code : crypto.randomUUID().replace(/-/g, '');
+  code = userDb.ok ? userDb.value.code : crypto.randomUUID().replace(/-/g, '');
 
   // Saving data to add to database
   const dbStore = { code: code, username: username, id: id, access_token: tokenInfo.access_token, refresh_token: tokenInfo.refresh_token };
 
   // Saving the ID as key and the data object (code, username, access token and refresh token) as values
   db.set(`twitch_${username}`, dbStore).then(() => {
-    console.log(dbStore);
+    req.session['code'] = code;
+    req.session['user_key'] = `twitch_${username}`;
+    req.session.cookie.maxAge = 600000; // 10 minutes
 
-    res.status(200).render(__dirname + '/callback.ejs', { code: code });    
+    res.redirect('/api/twitch/auth');
   })
 
 })

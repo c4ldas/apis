@@ -1,7 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
+
 router.get('/', async (req, res) => {
+  
   res.redirect('https://id.twitch.tv/oauth2/authorize?' +
     new URLSearchParams({
       force_verify: false,

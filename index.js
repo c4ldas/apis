@@ -1,9 +1,18 @@
-const express = require("express"); // Express server
+const express = require("express"); 
+const session = require('express-session');
 const app = express();
 const cors = require("cors");
 app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
+
+
+
+app.use(session({
+  secret: process.env.APP_SESSION_SECRET,
+  resave: false,
+  saveUninitialized: true,
+}));
 
 // Blocking access for *.js files, except the frontend ones
 app.use("/*.js", (req, res, next) => {
@@ -44,9 +53,9 @@ app.use("/api/valorant/account", require("./api/valorant/account"));
 
 // Twitch things
 app.use("/api/twitch", require("./api/twitch"));
-app.use("/api/twitch/prediction", require("./api/twitch/prediction"));
-app.use("/api/twitch/callback", require("./api/twitch/callback"));
-app.use("/api/twitch/login", require("./api/twitch/login"));
+// app.use("/api/twitch/prediction", require("./api/twitch/prediction"));
+// app.use("/api/twitch/callback", require("./api/twitch/callback"));
+// app.use("/api/twitch/login", require("./api/twitch/login"));
 
 // TFT things
 app.use("/api/tft", require("./api/tft"));

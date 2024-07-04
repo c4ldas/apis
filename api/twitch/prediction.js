@@ -74,12 +74,32 @@ router.get('/get/:code', async (req, res) => {
 
 // Database
 async function databaseQuery(channel, code) {
-  const values = await db.get(`twitch_${channel}`)
-  const dbCode = values ? values.code : null
+  
+  const request = await db.get(`twitch_${channel}`);
+  const values = request.value;
+  const dbCode = request.ok ? request.value.code : null
   if (dbCode !== code) {
     return { erro: 'Code inválido!' }
   }
   return { access_token: values.access_token, refresh_token: values.refresh_token, id: values.id }
+}
+
+// Get Open Prediction
+async function getOpenPrediction(channel, code) {
+
+  const values = await databaseQuery(channel, code)
+  if (values.erro) return values.erro
+
+  const buscaFetch = await fetch(`https://api.twitch.tv/helix/predictions?broadcaster_id=${values.id}`, {
+    "method": "GET",
+    "headers": {
+      "authorization": `Bearer ${values.access_token}`,
+      "Client-Id": process.env.TWITCH_CLIENT_ID
+    }
+  })
+
+  const busca = await buscaFetch.json()
+  return { currentPrediction: busca.data[0], broadcasterId: values.id, access_token: values.access_token }
 }
 
 
@@ -112,7 +132,8 @@ async function createNewPrediction(code, time, channel, question, option1, optio
     })
   });
 
-  const createPrediction = await createPredictionFetch.json()
+  const createPrediction = await createPredictionFetch.json();
+  // console.log("CreatePrediction:", createPrediction);
 
   if (createPrediction.status) {
     return 'Erro: Já existe aposta/palpite ativo, não é possível abrir novamente!'
@@ -141,45 +162,60 @@ async function generateNewToken(channel, refreshToken) {
   const newAccessToken = newToken.access_token
   const newRefreshToken = newToken.refresh_token
 
-  const values = await db.get(`twitch_${channel}`)
+  const request = await db.get(`twitch_${channel}`);
+  const values = request.value;
 
   values.access_token = newAccessToken
   values.refresh_token = newRefreshToken
 
   const newTokenDb = await db.set(`twitch_${channel}`, values).then(async () => {
-    const newValues = await db.get(`twitch_${channel}`)
+    const request = await db.get(`twitch_${channel}`);
+    const newValues = request.value;
     return newValues
   })
   return newTokenDb
 }
 
 
-// Get Open Prediction
-async function getOpenPrediction(channel, code) {
-
-  const values = await databaseQuery(channel, code)
+// Cancel Prediction
+async function cancelPrediction(code, channel) {
+  const values = await getOpenPrediction(channel, code);
   if (values.erro) return values.erro
 
-  const buscaFetch = await fetch(`https://api.twitch.tv/helix/predictions?broadcaster_id=${values.id}`, {
-    "method": "GET",
-    "headers": {
-      "authorization": `Bearer ${values.access_token}`,
-      "Client-Id": process.env.TWITCH_CLIENT_ID
-    }
-  })
+  const broadcasterId = values.broadcasterId
+  const getCurrentPrediction = values.currentPrediction
+  const predictionId = getCurrentPrediction.id
 
-  const busca = await buscaFetch.json()
-  return { currentPrediction: busca.data[0], broadcasterId: values.id, access_token: values.access_token }
+  const cancelarAposta = await fetch(`https://api.twitch.tv/helix/predictions?broadcaster_id=${broadcasterId}`, {
+    "method": "PATCH",
+    "headers": {
+      'authorization': `Bearer ${values.access_token}`,
+      "Client-Id": process.env.TWITCH_CLIENT_ID,
+      "Content-Type": "application/json"
+    },
+    "body": JSON.stringify({
+      'broadcaster_id': broadcasterId,
+      'status': 'CANCELED',
+      'id': predictionId,
+    })
+  });
+
+  const result = await cancelarAposta.json();
+
+  if (result.status) {
+    return 'Não há palpites para cancelar!'
+  }
+  return `Aposta/Palpite cancelado`
 }
 
 
 // Close Prediction
 async function closePrediction(code, channel, winner) {
-  const getPrediction = await getOpenPrediction(channel, code);
-  if (getPrediction === 'Code inválido!') return getPrediction;
+  const values = await getOpenPrediction(channel, code);
+  if (values.erro) return values.erro
 
-  const broadcasterId = getPrediction.broadcasterId;
-  const getCurrentPrediction = getPrediction.currentPrediction;
+  const broadcasterId = values.broadcasterId;
+  const getCurrentPrediction = values.currentPrediction;
   const predictionId = getCurrentPrediction.id;
 
   // Map outcomes with corresponding index strings
@@ -202,7 +238,7 @@ async function closePrediction(code, channel, winner) {
   const fecharAposta = await fetch(`https://api.twitch.tv/helix/predictions?broadcaster_id=${broadcasterId}`, {
     "method": "PATCH",
     "headers": {
-      'authorization': `Bearer ${getPrediction.access_token}`,
+      'authorization': `Bearer ${values.access_token}`,
       "Client-Id": process.env.TWITCH_CLIENT_ID,
       "Content-Type": "application/json"
     },
@@ -223,37 +259,5 @@ async function closePrediction(code, channel, winner) {
   return `Resultado pago e encerrado! Opção vencedora: ${outcomeWinnerTitle}`;
 }
 
-
-// Cancel Prediction
-async function cancelPrediction(code, channel) {
-
-  const getPrediction = await getOpenPrediction(channel, code)
-  if (getPrediction === 'Code inválido!') return getPrediction
-
-  const broadcasterId = getPrediction.broadcasterId
-  const getCurrentPrediction = getPrediction.currentPrediction
-  const predictionId = getCurrentPrediction.id
-
-  const cancelarAposta = await fetch(`https://api.twitch.tv/helix/predictions?broadcaster_id=${broadcasterId}`, {
-    "method": "PATCH",
-    "headers": {
-      'authorization': `Bearer ${getPrediction.access_token}`,
-      "Client-Id": process.env.TWITCH_CLIENT_ID,
-      "Content-Type": "application/json"
-    },
-    "body": JSON.stringify({
-      'broadcaster_id': broadcasterId,
-      'status': 'CANCELED',
-      'id': predictionId,
-    })
-  });
-
-  const result = await cancelarAposta.json();
-
-  if (result.status) {
-    return 'Não há palpites para cancelar!'
-  }
-  return `Aposta/Palpite cancelado`
-}
 
 module.exports = router;
