@@ -22,13 +22,14 @@ router.get('/', async (req, res) => {
 
 // Create prediction
 router.get('/create/:code', async (req, res) => {
-  const channel = req.query.channel
-  const question = req.query.question || null
-  const option1 = req.query.option1
-  const option2 = req.query.option2
-  const option3 = req.query.option3 || null
-  const code = req.params.code
-  const newPrediction = await createNewPrediction(code, channel, question, option1, option2, option3)
+  const channel = req.query.channel;
+  const time = parseInt(req.query.time) || 300;
+  const question = req.query.question || null;
+  const option1 = req.query.option1;
+  const option2 = req.query.option2;
+  const option3 = req.query.option3 || null;
+  const code = req.params.code;
+  const newPrediction = await createNewPrediction(code, time, channel, question, option1, option2, option3);
 
   console.log(`Twitch Prediction - Channel: ${channel} - ${newPrediction}`)
   res.status(200).send(newPrediction)
@@ -83,7 +84,7 @@ async function databaseQuery(channel, code) {
 
 
 // Create Prediction
-async function createNewPrediction(code, channel, question, option1, option2, option3) {
+async function createNewPrediction(code, time, channel, question, option1, option2, option3) {
 
   const values = await databaseQuery(channel, code)
   if (values.erro) return values.erro
@@ -106,7 +107,7 @@ async function createNewPrediction(code, channel, question, option1, option2, op
     body: JSON.stringify({
       'broadcaster_id': values.id,
       'title': question !== null ? question : 'Quem ganha esse mapa?',
-      'prediction_window': 300,
+      'prediction_window': time,
       'outcomes': possibleOutcomes
     })
   });
