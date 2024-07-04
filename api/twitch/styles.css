@@ -76,3 +76,17 @@ a {
 .privacy {
   font-size: 1.2rem;
 }
+
+dialog.fail {
+  background-color: #c80000;
+}
+
+dialog.success {
+  background-color: green;
+}
+
+dialog::backdrop {
+  background-color: hsla(0, 0%, 20%, .6);
+  backdrop-filter: blur(0.3rem);
+  -webkit-backdrop-filter: blur(0.3rem);
+}
