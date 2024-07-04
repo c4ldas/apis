@@ -4,10 +4,7 @@ const db = new Database();
 const router = express.Router();
 
 router.post('/', async (req, res) => {
-  try {
-    console.log("/logout");
-    console.log(req.body);
-    
+  try {    
     const revoke = (token) => `https://id.twitch.tv/oauth2/revoke?client_id=${process.env.TWITCH_CLIENT_ID}&token=${token}`;    
     const userData = await db.get(req.body.user_key);
 

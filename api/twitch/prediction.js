@@ -133,7 +133,7 @@ async function createNewPrediction(code, time, channel, question, option1, optio
   });
 
   const createPrediction = await createPredictionFetch.json();
-  console.log("CreatePrediction:", createPrediction);
+  // console.log("CreatePrediction:", createPrediction);
 
   if (createPrediction.status) {
     return 'Erro: Já existe aposta/palpite ativo, não é possível abrir novamente!'
