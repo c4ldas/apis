@@ -64,8 +64,8 @@ async function getAccessToken(refreshToken){
     return response.access_token;
     
   } catch (error) {
-    console.log("Spotify getAccessToken():", error);
-    console.log(__filename);
+    console.log(red("Spotify getAccessToken():", error));
+    console.log(red(__filename));
     throw error;
   }
 }
@@ -94,8 +94,8 @@ async function getSong(accessToken){
     return response;
     
   } catch (error) {
-    console.log("Spotify getSong():", error)
-    console.log(__filename);
+    console.log(red("Spotify getSong():", error));
+    console.log(red(__filename));
     throw error;
   }
 }
