@@ -43,7 +43,7 @@ router.get("/", async (req, res) => {
     _refreshToken: refreshToken,
   };
 
-  console.log(`ID: ${id}, displayName: ${displayName}`);
+  console.log(`Spotify callback: ID: ${id}, displayName: ${displayName}`);
   await db.set(id, values);
   res.render(__dirname + "/callback.ejs", { displayName: displayName, id: id });
 });

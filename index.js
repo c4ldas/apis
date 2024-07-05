@@ -36,9 +36,9 @@ app.use("/api/database", require("./api/database"));
 
 // Spotify things
 app.use("/api/spotify", require("./api/spotify"));
-app.use("/api/spotify/login", require("./api/spotify/login"));
-app.use("/api/spotify/callback", require("./api/spotify/callback"));
-app.use("/api/spotify/musica", require("./api/spotify/musica"));
+// app.use("/api/spotify/login", require("./api/spotify/login"));
+// app.use("/api/spotify/callback", require("./api/spotify/callback"));
+// app.use("/api/spotify/musica", require("./api/spotify/musica"));
 
 // Steam things
 app.use("/api/steam", require("./api/steam"));
