@@ -44,7 +44,15 @@ router.get('/', async (req, res) => {
   code = userDb.ok ? userDb.value.code : crypto.randomUUID().replace(/-/g, '');
 
   // Saving data to add to database
-  const dbStore = { code: code, username: username, id: id, access_token: tokenInfo.access_token, refresh_token: tokenInfo.refresh_token };
+  const dbStore = { 
+    code: code, 
+    username: username, 
+    id: id, 
+    access_token: tokenInfo.access_token, 
+    refresh_token: tokenInfo.refresh_token 
+  };
+  
+  console.log(`Twitch callback - Channel: ${username} - Code: ${code}`)
 
   // Saving the ID as key and the data object (code, username, access token and refresh token) as values
   db.set(`twitch_${username}`, dbStore).then(() => {
