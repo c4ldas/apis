@@ -1,5 +1,6 @@
 const express = require("express"); 
 const session = require('express-session');
+const fs = require("node:fs");
 const app = express();
 const cors = require("cors");
 app.use(express.json());
@@ -31,14 +32,28 @@ app.use("/*.js", (req, res, next) => {
 
 app.use(express.static(__dirname));
 
+/* 
+app.get("/test", async (req, res) => {
+  const request = await fetch("https://jsonplaceholder.typicode.com/users");
+  const response = await request.json();
+  // console.log(response);
+
+  fs.writeFileSync("./test/list.json", JSON.stringify(response, null, 2));
+  console.log("File created!");
+  setTimeout( () => {
+    fs.unlinkSync("./test/list.json");
+    console.log("File deleted");
+  }, 30000);
+
+  res.status(200).send('File Created');  
+}) 
+*/
+
 // Database things
 app.use("/api/database", require("./api/database"));
 
 // Spotify things
 app.use("/api/spotify", require("./api/spotify"));
-// app.use("/api/spotify/login", require("./api/spotify/login"));
-// app.use("/api/spotify/callback", require("./api/spotify/callback"));
-// app.use("/api/spotify/musica", require("./api/spotify/musica"));
 
 // Steam things
 app.use("/api/steam", require("./api/steam"));
@@ -53,9 +68,6 @@ app.use("/api/valorant/account", require("./api/valorant/account"));
 
 // Twitch things
 app.use("/api/twitch", require("./api/twitch"));
-// app.use("/api/twitch/prediction", require("./api/twitch/prediction"));
-// app.use("/api/twitch/callback", require("./api/twitch/callback"));
-// app.use("/api/twitch/login", require("./api/twitch/login"));
 
 // TFT things
 app.use("/api/tft", require("./api/tft"));
