@@ -71,11 +71,9 @@ app.use("/api/twitch", require("./api/twitch"));
 
 // TFT things
 app.use("/api/tft", require("./api/tft"));
-app.use("/api/tft/rank", require("./api/tft/rank"));
 
 // LOL things
 app.use("/api/lol", require("./api/lol"));
-// app.use("/api/lol/rank", require("./api/lol/rank"));
 
 // Youtube things
 app.use("/api/youtube", require("./api/youtube"));
