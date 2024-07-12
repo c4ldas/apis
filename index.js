@@ -7,8 +7,6 @@ app.use(express.json());
 app.use(cors());
 app.set("view engine", "ejs");
 
-
-
 app.use(session({
   secret: process.env.APP_SESSION_SECRET,
   resave: false,
