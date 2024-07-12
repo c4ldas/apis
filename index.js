@@ -1,4 +1,4 @@
-const express = require("express"); 
+const express = require("express");
 const session = require('express-session');
 const fs = require("node:fs");
 const app = express();
@@ -75,7 +75,7 @@ app.use("/api/tft/rank", require("./api/tft/rank"));
 
 // LOL things
 app.use("/api/lol", require("./api/lol"));
-app.use("/api/lol/rank", require("./api/lol/rank"));
+// app.use("/api/lol/rank", require("./api/lol/rank"));
 
 // Youtube things
 app.use("/api/youtube", require("./api/youtube"));
@@ -104,6 +104,6 @@ app.get("/.well-known/discord", async (req, res) => {
 const listener = app.listen(process.env.PORT, () => {
   if (!process.env.REPLIT_DEPLOYMENT) {
     console.log("Listening on port " + listener.address().port);
-    console.log(`Dev URL: \nhttps://${process.env.REPLIT_DEV_DOMAIN}`); 
+    console.log(`Dev URL: \nhttps://${process.env.REPLIT_DEV_DOMAIN}`);
   }
 });
