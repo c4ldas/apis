@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
 
     if (!getLeague.data[0]) {
       const response = `Sem jogos do ${leagues[league]} hoje!`
-      console.log(yellow(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${response}`))
+      console.log(yellow(`Valorant Schedule - Channel: ${channel} - ${response}`))
       res.status(200).send(response)
       return
     }
@@ -76,7 +76,14 @@ router.get('/', async (req, res) => {
     let todayGames = []
 
     for (let x = 0; x < getLeague.data.length; x++) {
-      dateGameConverted = timeZone.getPlainDateTimeFor(getLeague.data[x].date)
+      // (termporarily)
+      // Adjusting date format for the new Date format 2024-07-1300:00:00UTC (termporarily)
+      // Remove the three lines below after the Date format response changes back to the original format 2023-01-17T20:00:00Z
+      let dateString = getLeague.data[x].date.replace('UTC', 'Z');
+      dateString = dateString.slice(0, 10) + 'T' + dateString.slice(10);
+      dateGameConverted = timeZone.getPlainDateTimeFor(dateString);      
+      // Uncomment this line after the date is back
+      // dateGameConverted = timeZone.getPlainDateTimeFor(getLeague.data[x].date)
 
       if (dateGameConverted.toString().split('T')[0] == todayDate.split('T')[0]) {
         todayGames.push(getLeague.data[x])
@@ -86,7 +93,7 @@ router.get('/', async (req, res) => {
     // In case todayGames.length is empty, it means there is no game today
     if (!todayGames.length) {
       const response = `Sem jogos do ${getLeague.data[0].league.name} hoje!`
-      console.log(yellow(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${response}`))
+      console.log(yellow(`Valorant Schedule - Channel: ${channel} - ${response}`))
       res.status(200).send(response)
       return
     }
@@ -95,7 +102,14 @@ router.get('/', async (req, res) => {
     let matches = []
 
     todayGames.forEach((game) => {
-      const hour = new Date(timeZone.getPlainDateTimeFor(game.date).toString()).getHours()
+      // (termporarily)
+      // Remove the lines below after the Date format response is back to the original 2023-01-17T20:00:00Z
+      let dateString = game.date.replace('UTC', 'Z');
+      dateString = dateString.slice(0,10) + 'T' + dateString.slice(10);
+      const hour = new Date(timeZone.getPlainDateTimeFor(dateString).toString()).getHours();
+      // Uncomment this line after the date is back
+      // const hour = new Date(timeZone.getPlainDateTimeFor(game.date).toString()).getHours();
+      
       if (game.match.id != null) {
         const nameTeam1 = game.match.teams[0].name;
         const nameTeam2 = game.match.teams[1].name;
@@ -107,13 +121,13 @@ router.get('/', async (req, res) => {
     })
 
     const response = `${getLeague.data[0].league.name}: ${matches.toString().replaceAll(',', ' // ')}`
-    console.log(green(`${new Date().toLocaleTimeString('en-UK')} - Channel: ${channel} - ${response}`))
+    console.log(green(`Valorant Schedule - Channel: ${channel} - ${response}`))
 
     res.status(200).send(response)
 
   } catch (error) {
     const response = `Infelizmente, a API está offline no momento para mostrar o resultado ao vivo`
-    console.log(red(response + ' / ' + error))
+    console.log(red('Valorant Schedule - ' + response + ' / ' + error))
     res.status(200).send(response)
   }
 })
