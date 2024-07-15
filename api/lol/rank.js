@@ -3,7 +3,6 @@
 const express = require("express");
 const router = express.Router();
 const regions = require("../../assets/validRegions");
-const { Server } = require("http");
 
 const apiURL = "api.riotgames.com";
 const puuidURL = (apiRUL, player, tag) => `https://americas.${apiRUL}/riot/account/v1/accounts/by-riot-id/${player}/${tag}`;
