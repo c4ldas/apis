@@ -76,14 +76,7 @@ router.get('/', async (req, res) => {
     let todayGames = []
 
     for (let x = 0; x < getLeague.data.length; x++) {
-      // (termporarily)
-      // Adjusting date format for the new Date format 2024-07-1300:00:00UTC (termporarily)
-      // Remove the three lines below after the Date format response changes back to the original format 2023-01-17T20:00:00Z
-      let dateString = getLeague.data[x].date.replace('UTC', 'Z');
-      dateString = dateString.slice(0, 10) + 'T' + dateString.slice(10);
-      dateGameConverted = timeZone.getPlainDateTimeFor(dateString);      
-      // Uncomment this line after the date is back
-      // dateGameConverted = timeZone.getPlainDateTimeFor(getLeague.data[x].date)
+      dateGameConverted = timeZone.getPlainDateTimeFor(getLeague.data[x].date)
 
       if (dateGameConverted.toString().split('T')[0] == todayDate.split('T')[0]) {
         todayGames.push(getLeague.data[x])
@@ -102,13 +95,7 @@ router.get('/', async (req, res) => {
     let matches = []
 
     todayGames.forEach((game) => {
-      // (termporarily)
-      // Remove the lines below after the Date format response is back to the original 2023-01-17T20:00:00Z
-      let dateString = game.date.replace('UTC', 'Z');
-      dateString = dateString.slice(0,10) + 'T' + dateString.slice(10);
-      const hour = new Date(timeZone.getPlainDateTimeFor(dateString).toString()).getHours();
-      // Uncomment this line after the date is back
-      // const hour = new Date(timeZone.getPlainDateTimeFor(game.date).toString()).getHours();
+      const hour = new Date(timeZone.getPlainDateTimeFor(game.date).toString()).getHours();
       
       if (game.match.id != null) {
         const nameTeam1 = game.match.teams[0].name;
