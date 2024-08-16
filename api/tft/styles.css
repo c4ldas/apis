@@ -91,6 +91,12 @@ td {
   font-weight: 700;
 }
 
+.tagLine {
+  color: #0000ff;
+  font-weight: 700;
+  
+}
+
 .regions {
   outline:solid;
   outline-color: black;
