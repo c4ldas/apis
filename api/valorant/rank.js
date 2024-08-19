@@ -177,11 +177,11 @@ router.get("/", async (req, res) => {
   } catch (error) {
     if (error.message.includes("Unexpected token < in JSON at position 0")) {
       res.status(200).send("Infelizmente, a API está fora do ar para mostrar o elo. Tente novamente mais tarde.");
-      console.log(`${new Date().toLocaleTimeString("en-UK")} - Valorant Rank API - Channel: ${channel} - ${error}`);
+      console.log(`Valorant text - Channel: ${channel} - ${error}`);
       return;
     }
     res.status(200).send(error.message);
-    console.log(`${new Date().toLocaleTimeString("en-UK")} - Valorant Rank API - Channel: ${channel} - ${error}`);
+    console.log(`Valorant text - Channel: ${channel} - ${error}`);
   }
 });
 
