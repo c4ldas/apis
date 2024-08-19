@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const urlRank = (player, tag) => `https://api.henrikdev.xyz/valorant/v1/account/${player}/${tag}?force=true`;
 
 router.get("/", async (req, res) => {
 
@@ -8,9 +9,7 @@ router.get("/", async (req, res) => {
   const type = req.query.type || "text";
   
   try {
-    const urlRank = `https://api.henrikdev.xyz/valorant/v1/account/${player}/${tag}?force=true`;
-
-    const accountRequest = await fetch(urlRank, {
+    const accountRequest = await fetch(urlRank(player, tag), {
       headers: {
         Authorization: process.env.VALORANT_API_TOKEN,
       },
