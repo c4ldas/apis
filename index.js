@@ -15,7 +15,7 @@ app.use(session({
 
 // Blocking access for *.js files, except the frontend ones
 app.use("/*.js", (req, res, next) => {
-  const exceptionList = ["puuid.js", "verify.js", "index_front.js"];
+  const exceptionList = ["puuid.js", "verify.js", "script.js"];
 
   // Extract the filename from the request path
   const requestedFile = req.originalUrl.split("/").pop();
