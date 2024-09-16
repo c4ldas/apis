@@ -55,7 +55,6 @@ app.use("/api/spotify", require("./api/spotify"));
 
 // Steam things
 app.use("/api/steam", require("./api/steam"));
-app.use("/api/steam/game", require("./api/steam/game"));
 
 // Valorant things
 app.use("/api/valorant", require("./api/valorant"));
