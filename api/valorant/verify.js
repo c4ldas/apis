@@ -52,7 +52,8 @@ async function showFormatted(event) {
     return
   }
 
-  const getRankFetch = await fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/br/${username.value}/${tagline.value}`)
+  // const getRankFetch = await fetch(`https://api.henrikdev.xyz/valorant/v1/mmr/br/${username.value}/${tagline.value}`)
+  const getRankFetch = await fetch(`/api/valorant/rank?channel=$(channel)&player=${encodeURIComponent(username.value)}&tag=${tagline.value}&type=json`);
   const getRank = await getRankFetch.json()
   console.log(getRank)
 
@@ -95,8 +96,11 @@ function generateCode(event) {
     return
   }
 
+  codeMsg = phrase.value ? `&msg="${msg}"` : '' ;
+  
   document.getElementById('mensagem-codigo').style.display = 'block'
   document.getElementById('mensagem-codigo').innerText = ''
-  document.getElementById('mensagem-codigo').innerText = `.me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/valorant/rank?channel=\$(channel)&player=${encodeURIComponent(username.value)}&tag=${tagline.value}&msg="${msg}"}`
+  // document.getElementById('mensagem-codigo').innerText = `.me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/valorant/rank?channel=\$(channel)&player=${encodeURIComponent(username.value)}&tag=${tagline.value}&msg="${msg}"}`
+  document.getElementById('mensagem-codigo').innerText = `.me \${touser} ► \${customapi.https://repl.c4ldas.com.br/api/valorant/rank?channel=\$(channel)&player=${encodeURIComponent(username.value)}&tag=${tagline.value}${codeMsg}}`
   document.getElementById('mensagem-codigo').style.fontFamily = 'monospace'
 }
