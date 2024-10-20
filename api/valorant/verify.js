@@ -96,7 +96,7 @@ function generateCode(event) {
     return
   }
 
-  codeMsg = phrase.value ? `&msg=\${queryescape "${msg}"}` : '' ;
+  codeMsg = phrase.value ? `&msg=\$(queryescape "${msg}")` : '' ;
   
   document.getElementById('mensagem-codigo').style.display = 'block'
   document.getElementById('mensagem-codigo').innerText = ''

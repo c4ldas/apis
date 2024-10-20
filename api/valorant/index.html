@@ -25,11 +25,11 @@
       <main class="main">
         <h1>Como usar o endpoint:</h1>
         <div>
-          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">USERNAME</span>"<wbr>&tag=<span class="tagLine">TAGLINE</span><wbr>&msg="<span class="message">MENSAGEM</span>"</code>
+          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player=<span class="playerName">USERNAME</span>"<wbr>&tag=<span class="tagLine">TAGLINE</span><wbr>&msg=$(queryescape "<span class="message">MENSAGEM</span>")</code>
         </div>
         <br/>
         <div>
-          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&id="<span class="playerName">ID</span>"<wbr>&msg="<span class="message">MENSAGEM</span>"</code>
+          <code class="code">https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&id="<span class="playerName">ID</span>"<wbr>&msg=$(queryescape "<span class="message">MENSAGEM</span>")</code>
         </div>        
         <h2>Exemplo: </h2>
         <div>Se o seu nick for: LOUD Coreano#LLL</div>
@@ -40,6 +40,8 @@
         <div>Caso não adicione nenhuma mensagem, a seguinte mensagem padrão será exibida (utilizando o usuário do exemplo):</div>
         <div class="message">LOUD Coreano tem 213 pontos e tá Imortal 2</div>
         <div><strong>ID</strong> = Para informações como usar o ID ao invés de player/tag, veja mais abaixo ou clique aqui: <a href='#id'>Usando ID</a></div>
+
+        
         <h2>Configure a sua mensagem:</h2>
         <div>Utilize o quadro abaixo para preencher seu nick, tag e mensagem (opcional), depois clique em "<strong>Mostrar mensagem formatada</strong>". <br/>Caso esteja satisfeito, clique em "<strong>Gerar código para chat</strong>"</div>
         <div style="padding:10px; ">
@@ -56,21 +58,22 @@
           </form>
         </div>
         
+        
         <h2>Criando o comando manualmente para o Streamelements:</h2>
         <p>Para adicionar o comando, use o quadro superior para gerar o comando ou crie manualmente usando o exemplo abaixo:</p> 
         <div>Caso seu nick possua caracteres especiais, acentos ou coisas esquisitas (você tem problemas?), use o quadro superior ou prefira usar a opção de ID logo abaixo.</div>
-        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">LOUD Coreano</span>"<wbr>&tag=<span class="tagLine">LLL</span><wbr>&msg="<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>"}</p>
+        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">LOUD Coreano</span>"<wbr>&tag=<span class="tagLine">LLL</span><wbr>&msg=$(queryescape "<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>")}</p>
 
         <a name='id'><h3>Usando ID ao invés de player/tag</h3></a>
         <p>Também é possível utilizar a opção id ao invés de player e tag. Com o ID, você não precisará ficar atualizando o comando cada vez que troca de nick (novamente, qual o seu problema?). O comando ficará assim:</p>
-        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&id=<span class="tagLine">10726a29-ce65-5471-a794-32733f309a16</span><wbr>&msg="<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>"}</p>
+        <p class="code">.me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&id=<span class="tagLine">10726a29-ce65-5471-a794-32733f309a16</span><wbr>&msg=$(queryescape "<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>")}</p>
         
         <p>Para descobrir o seu id (também chamado de puuid), abra essa página e digite o seu nick e tag:</p>
         
         <a href='./puuid' target="_blank">Encontre o seu ID (puuid)</a>        
         
         <h2>Ou fazendo diretamente pelo chat:</h2>
-        <p class="code"> !cmd add rank .me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">LOUD Coreano</span>"<wbr>&tag=<span class="tagLine">LLL</span><wbr>&msg="<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>"}</p>
+        <p class="code"> !cmd add rank .me ${touser} ► ${customapi.<wbr>https://repl.c4ldas.com.br<wbr>/api/valorant/rank?channel=$(channel)<wbr>&player="<span class="playerName">LOUD Coreano</span>"<wbr>&tag=<span class="tagLine">LLL</span><wbr>&msg=$(queryescape "<span class="message">(player) tem (pontos) pontos e está (rank), com (vitorias) vitórias e em (posicao)º na tabela</span>")}</p>
       </main>
       <footer class="footer">
         <nav class="navigation">
