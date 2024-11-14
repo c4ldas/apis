@@ -1,3 +1,8 @@
+# Old version
+
+This is an old version of the website.
+New version is now hosted in [c4ldas-api](https://github.com/c4ldas/c4ldas-api) repository.
+
 # APIs
 
 These are some endpoints I created to facilitate Twitch streamers to update commands more easily
